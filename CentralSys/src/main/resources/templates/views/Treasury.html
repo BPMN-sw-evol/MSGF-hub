@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head th:replace="layout/layout :: head">
+    <meta charset="UTF-8">
+    <title>Treasury</title>
+</head>
+<body>
+
+<section class="dinamico">
+    <div layout:fragment="views">
+        <div class="col mt-4 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h1 class="text-center text-primary" th:text="${titulo}"></h1>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped" id="creditTable">
+                            <thead>
+                            <tr class="text-center">
+                                <th>Instance Id</th>
+                                <th>Couple's Names</th>
+                                <th>Start Date</th>
+                                <th>State</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr class="text-center" th:each="processVariablesList, index : ${processVariablesList}">
+                                <td th:text="${processVariablesList.TaskInfo.processId}"></td>
+                                <td th:text="${processVariablesList.coupleName1 + ' y ' + processVariablesList.coupleName2}"></td>
+                                <td th:text="${processVariablesList.requestDate}"></td>
+                                <td th:text="${processVariablesList.TaskInfo.taskName}"></td>
+                                <td style="width: 20vh;">
+                                    <button type="button" class="btn btn-primary" onclick="fillFormFields(this)">
+                                        <i class="fa-solid fa-magnifying-glass mx-1"></i>
+                                        <span>Review</span>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<th:block layout:fragment="page-scripts">
+    <script th:src="@{js/views/Treasury.js}"></script>
+</th:block>
+</body>
+</html>

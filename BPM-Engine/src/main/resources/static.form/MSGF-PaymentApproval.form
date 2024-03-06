@@ -1,0 +1,33 @@
+{
+  "components": [
+    {
+      "text": "# PAYMENT APPROVAL BY TREASURY",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_0jmiusd",
+        "columns": null
+      },
+      "id": "Field_0bcdtia"
+    },
+    {
+      "label": "Payment Approved",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_1khmu8f",
+        "columns": null
+      },
+      "id": "Field_1b3iibz",
+      "key": "paymentApproved"
+    }
+  ],
+  "type": "default",
+  "id": "paymentApproval",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.18.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "schemaVersion": 13
+}

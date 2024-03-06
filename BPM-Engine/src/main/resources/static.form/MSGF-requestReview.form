@@ -1,0 +1,119 @@
+{
+  "components": [
+    {
+      "text": "# REQUEST REVIEW BY CREDIT ANALYST",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_1hnp1sw",
+        "columns": null
+      },
+      "id": "Field_0tf7eyg"
+    },
+    {
+      "label": "Couple Name 1",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_09t2uxc",
+        "columns": null
+      },
+      "id": "Field_0drrtqg",
+      "key": "coupleName1",
+      "disabled": true,
+      "readonly": true
+    },
+    {
+      "label": "Couple Email 1",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0xwsa19",
+        "columns": null
+      },
+      "id": "Field_1xt1u6e",
+      "key": "coupleEmail1",
+      "disabled": true,
+      "readonly": true
+    },
+    {
+      "label": "Couple Name 2",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0q5kmhr",
+        "columns": null
+      },
+      "id": "Field_1vfjqp1",
+      "key": "coupleName2",
+      "readonly": true,
+      "disabled": true
+    },
+    {
+      "label": "Couple Email 2",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1d7w357",
+        "columns": null
+      },
+      "id": "Field_0r5gzrf",
+      "key": "coupleEmail2",
+      "disabled": true,
+      "readonly": true
+    },
+    {
+      "label": "Creation Date",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0kxgylc",
+        "columns": null
+      },
+      "id": "Field_13mxcc5",
+      "key": "creationDate",
+      "disabled": true,
+      "readonly": true
+    },
+    {
+      "label": "Are both employeed?",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0b5xzer",
+        "columns": null
+      },
+      "id": "Field_0njpdjw",
+      "key": "bothEmployees",
+      "disabled": true,
+      "readonly": true
+    },
+    {
+      "label": "Marriage Years",
+      "type": "number",
+      "layout": {
+        "row": "Row_1yd5kw4",
+        "columns": null
+      },
+      "id": "Field_1pxf0zy",
+      "key": "marriageYears",
+      "disabled": true,
+      "readonly": true
+    },
+    {
+      "label": "Count Reviews BPM",
+      "type": "number",
+      "layout": {
+        "row": "Row_1bguzqm",
+        "columns": null
+      },
+      "id": "Field_187yatb",
+      "key": "countReviewsBpm",
+      "disabled": true,
+      "readonly": true
+    }
+  ],
+  "type": "default",
+  "id": "requestReview",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.18.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "schemaVersion": 13
+}

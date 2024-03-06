@@ -1,0 +1,173 @@
+<div class="card-body d-flex" th:if="${people != null}">
+    <div class="card col-md-6">
+        <div class="card-header">
+            <div class="card-title">
+                <h3 class="text-center">First Person information</h3>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="form-floating mb-3 p-1">
+                <input class="form-control" id="id1" type="text" name="people[0].id"
+                       placeholder="Enter your personal ID" th:value="${people[0].getId()}"
+                       required onblur="validateDNI(this)"
+                       th:attr="readonly=${people[0].getId() != null}">
+                <label for="id1"> DNI: </label>
+            </div>
+            <div class="form-floating mb-3 p-1">
+                <input class="form-control" id="fullname1" type="text" name="people[0].fullname"
+                       placeholder="Enter your fullname" th:value="${people[0].getFullname() != null  ? people[0].getFullname() : 'Carlos Martínez'}" required onblur="validateFullName(this)">
+                <label for="fullname1"> FullName: </label>
+            </div>
+            <div class="form-floating mb-3 p-1">
+                <input class="form-control" id="email1" type="email" name="people[0].email"
+                       placeholder="Enter your email" th:value="${people[0].getEmail() != null ? people[0].getEmail() : 'prueba1@gmail.com'}" required onblur="validateEmail(this)">
+                <label for="email1"> E-Mail: </label>
+            </div>
+            <div class="form-floating mb-3 p-1">
+
+                <select class="form-select" id="gender1" name="people[0].gender" required onblur="validateGender(this)">
+                    <option value="" th:selected="${people[0].getGender() == null or people[0].getGender() == 'Woman'}" disabled>Select your gender</option>
+                    <option value="Male" th:selected="${people[0].getGender() == null or people[0].getGender() == 'Male'}">Male</option>
+                    <option value="Woman" th:selected="${people[0].getGender() != null and people[0].getGender() == 'Woman'}">Woman</option>
+                </select>
+                <label for="gender1">Gender:</label>
+            </div>
+
+            <div class="form-floating mb-3 p-1">
+                <input class="form-control" id="birthDate1" type="date" name="people[0].birthDate"
+                       placeholder="Enter your birth date" th:value="${people[0].getBirthDate() != null ? people[0].getBirthDate() : '2001-07-23'}" required
+                       onblur="validateBirthDate(this)">
+                <label for="birthDate1"> Birth Date: </label>
+            </div>
+            <div class="form-floating mb-3 p-1">
+                <input class="form-control" id="phoneNumber1" type="text"
+                       name="people[0].phoneNumber" th:value="${people[0].getPhoneNumber() != null ? people[0].getPhoneNumber() : '3155677654'}" placeholder="Enter your phone number"
+                       pattern="[0-9]{10}" required onblur="validatePhoneNumber(this)">
+                <label for="phoneNumber1"> Phone Number: </label>
+            </div>
+        </div>
+    </div>
+    <div class="card col-md-6">
+        <div class="card-header">
+            <div class="card-title">
+                <h3 class="text-center">Second Person information</h3>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="form-floating mb-3 p-1">
+                <input class="form-control" id="id2" type="text" name="people[1].id"
+                       placeholder="Enter your personal ID" th:value="${people[1].getId()}" required onblur="validateDNI(this)"
+                       th:attr="readonly=${people[1].getId() != null}">
+                <label for="id2"> DNI: </label>
+            </div>
+            <div class="form-floating mb-3 p-1">
+                <input class="form-control" id="fullname2" type="text" name="people[1].fullname"
+                       placeholder="Enter fullname" th:value="${people[1].getFullname() != null ? people[1].getFullname() : 'María Roa'}" required onblur="validateFullName(this)">
+                <label for="fullname2"> FullName: </label>
+            </div>
+            <div class="form-floating mb-3 p-1">
+                <input class="form-control" id="email2" type="email" name="people[1].email"
+                       placeholder="Enter your email" th:value="${people[1].getEmail() != null ? people[1].getEmail() : 'prueba@gmail.com'}" required onblur="validateEmail(this)">
+                <label for="email2"> E-Mail: </label>
+            </div>
+            <div class="form-floating mb-3 p-1">
+                <select class="form-select" id="gender2" name="people[1].gender" required onblur="validateGender(this)">
+                    <option value="" th:selected="${people[1].getGender() == null or people[1].getGender() == ''}" disabled>Select your gender</option>
+                    <option value="Male" th:selected="${people[1].getGender() == 'Male'}">Male</option>
+                    <option value="Woman" th:selected="${people[1].getGender() == null or people[1].getGender() == 'Woman'}">Woman</option>
+                </select>
+                <label for="gender2">Gender:</label>
+            </div>
+
+            <div class="form-floating mb-3 p-1">
+                <input class="form-control" id="birthDate2" type="date" name="people[1].birthDate"
+                       placeholder="Enter your birth date" required th:value="${people[1].getBirthDate() != null ? people[1].getBirthDate() : '2000-01-20'}"
+                       onblur="validateBirthDate(this)">
+                <label for="birthDate2"> Birth Date: </label>
+            </div>
+            <div class="form-floating mb-3 p-1">
+                <input class="form-control" id="phoneNumber2" type="text"
+                       name="people[1].phoneNumber" th:value="${people[1].getPhoneNumber() != null ? people[1].getPhoneNumber() : '3113777347'}"
+                       placeholder="Enter your phone number"
+                       pattern="[0-9]{10}" required onblur="validatePhoneNumber(this)">
+                <label for="phoneNumber2"> Phone Number: </label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card-header">
+    <div class="card-title">
+        <h1 class="text-center">Credit Information</h1>
+    </div>
+</div>
+<div class="card-body">
+    <div class="form-floating mb-3 p-1">
+        <input class="form-control" type="number" id="marriageYears" min="1" max="10"
+               name="marriageYears"
+               placeholder="Enter years of marriage"
+               th:value="${creditInfo != null and creditInfo.size() > 0 ? creditInfo[0].marriageYears : '5'}"
+               onblur="validateMarriageYears(this)">
+        <label for="marriageYears">Years of Marriage:</label>
+    </div>
+    <div class="form-floating mb-3 p-1">
+        <select class="form-select" id="bothEmployees" name="bothEmployees" required
+                onblur="validatebothEmployees(this)">
+            <option value="" th:selected="${creditInfo != null and creditInfo.size() > 0 ? creditInfo[0].bothEmployees == null : false}" disabled selected>Both are employed?</option>
+            <option value="Yes" th:selected="${creditInfo != null and creditInfo.size() > 0? creditInfo[0].bothEmployees == true : true}">Yes</option>
+            <option value="No" th:selected="${creditInfo != null and creditInfo.size() > 0 ? creditInfo[0].bothEmployees == false : false}">No</option>
+        </select>
+        <label for="bothEmployees">Both Employed:</label>
+    </div>
+    <div class="form-floating mb-3 p-1">
+        <input class="form-control" type="number" id="housePrices" min="0" step="100000"
+               name="housePrices"
+               placeholder="Enter house prices" required onblur="validateHousePrices(this)"
+               th:value="${creditInfo != null and creditInfo.size() > 0 ? creditInfo[0].housePrices :'1000000'}"
+               oninput="updateCoupleSavingsMax()">
+        <label for="housePrices">House Prices:</label>
+    </div>
+    <div class="form-floating mb-3 p-1">
+        <input class="form-control" type="number" id="quotaValue" min="10000" step="10000"
+               name="quotaValue"
+               placeholder="Enter quota value" required onblur="validateQuotaValue(this)"
+               th:value="${creditInfo != null and creditInfo.size() > 0 ? creditInfo[0].quotaValue: '200000'}">
+        <label for="quotaValue">Quota Value:</label>
+    </div>
+    <div class="form-floating mb-3 p-1">
+        <input class="form-control" type="number" id="coupleSavings" min="0"
+               name="coupleSavings"
+               placeholder="Enter couple savings" required onblur="validateCoupleSavings(this)"
+               th:value="${creditInfo != null and creditInfo.size() > 0 ? creditInfo[0].coupleSavings:'100000'}">
+        <label for="coupleSavings">Couple Savings:</label>
+    </div>
+    <div class="card-header">
+        <div class="card-title">
+            <h1 class="text-center">Supporting Docs</h1>
+            <h4 class="text-center">In this section you will be able to upload the supporting docs required for the credit request.</h4>
+            <p class="text-center">Please make sure that in each compressed file (max size 10MB in PDF format) you have the necessary docs for the approval of your request.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card-body card-text mt-3 d-flex align-items-center justify-content-center">
+                    <div class="text-center">
+                        <label for="pdfSupport">Identification Document:</label>
+                        <input class="form-control" type="file" id="pdfSupport" accept=".pdf" name="pdfSupport" required onblur="validatePdfFile(this)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card-body card-text mt-3 d-flex align-items-center justify-content-center">
+                    <div class="text-center">
+                        <label for="workSupport">Certification Laboral:</label>
+                        <input class="form-control" type="file" id="workSupport" accept=".pdf" name="workSupport" required onblur="validatePdfFile(this)">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

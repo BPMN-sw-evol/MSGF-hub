@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head th:replace="layout/layout :: head">
+    <meta charset="UTF-8">
+    <title>Couple Form</title>
+</head>
+<body>
+
+<section class="nombreClass">
+    <div class="container-fluid" layout:fragment="views">
+        <div class="col mt-3 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h1 class="text-center">Personal Information</h1>
+                    </div>
+                </div>
+                <form id="personForm" action="credit_request/create" method="post" enctype="multipart/form-data" onsubmit="return validateFormField(this);">
+                    <div th:replace="fragments/formCredit.html"></div>
+                    <div class="card-footer d-flex justify-content-around">
+                        <button id="submitBothForms" class="btn btn-primary" type="submit"><i class="fa-solid fa-file-arrow-up mx-1"></i><span>Save</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<th:block layout:fragment="page-scripts">
+    <script th:src="@{js/validationsFormCredits.js}"></script>
+</th:block>
+
+</body>
+</html>

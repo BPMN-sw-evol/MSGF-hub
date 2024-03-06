@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Informe de Rechazo por Oficina Legal</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+
+        p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Informe de Rechazo</h1>
+    <h1>Solicitud de crédito</h1>
+
+    <p>Cordial saludo,</p>
+
+    <p>La solicitud de crédito: <span th:text="${processId}"></span></p>
+    <p>ha sido revisada por la OFICINA LEGAL y se ha determinado en negar la solicitud:</p>
+
+    <ul>
+        <li>Nombre de la Pareja 1: <span th:text="${coupleName1}"></span></li>
+        <li>Nombre de la Pareja 2: <span th:text="${coupleName2}"></span></li>
+        <li>Email de la Pareja 1: <span th:text="${coupleEmail1}"></span></li>
+        <li>Email de la Pareja 2: <span th:text="${coupleEmail2}"></span></li>
+        <li>Soporte PDF: <span th:text="${pdfSupport}"></span></li>
+        <li>Soporte de Trabajo: <span th:text="${workSupport}"></span></li>
+
+    </ul>
+
+    <p>Lo anterior con motivo de que ha encontrado un inconveniente relacionado a los soportes.</p>
+
+    <p>Atentamente,</p>
+    <p>Equipo MSG-Foundation</p>
+</div>
+</body>
+</html>
