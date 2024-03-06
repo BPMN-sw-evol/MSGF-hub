@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head th:replace="layout/layout :: head">
+<meta charset="UTF-8">
+</head>
+<body>
+
+	<section class="dinamico">
+		<div class="h-100 d-flex align-items-center justify-content-center flex-column p-4" layout:fragment="views">
+			<h1 class="text-center text-primary mb-4" th:text="${titulo}"></h1>
+			<p class="mr-4 ms-4">Welcome to our couples' credit request page! We are delighted to assist you in the process
+				of obtaining the financing you need to take an important step in your lives together. On
+				this platform, you can provide both your personal information and relevant details about
+				your marriage and financial situation. Our goal is to provide you with a simple and
+				secure experience for applying for credits that suit your needs. Through the available
+				forms, you can share detailed information such as your personal and contact information,
+				as well as information related to your years of marriage, employment, financial situation,
+				and more. We are committed to helping you achieve your financial goals and look forward to being
+				your partner on this exciting journey. Let's get started!</p>
+		</div>
+	</section>
+</body>
+</html>

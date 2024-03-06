@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head th:replace="layout/layout :: head">
+    <meta charset="UTF-8">
+    <title>Treasury</title>
+</head>
+<body>
+
+<section class="dinamico">
+    <div layout:fragment="views">
+        <div class="col mt-4 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h1 class="text-center text-primary" th:text="${titulo}"></h1>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control"
+                                           id="processId"
+                                           name="processId"
+                                           th:value="${creditRequestDTO.getProcessId()}"
+                                           readonly
+                                           type="text">
+                                    <label for="processId">process Id:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control"
+                                           id="state"
+                                           name="state"
+                                           th:value="${creditRequestDTO.taskInfo.getTaskName()}"
+                                           readonly
+                                           type="text">
+                                    <label for="state">State:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control"
+                                           id="requestDate"
+                                           name="requestDate"
+                                           th:value="${creditRequestDTO.getRequestDate()}"
+                                           readonly
+                                           type="text">
+                                    <label for="requestDate">Start Date:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control"
+                                           id="housePrices"
+                                           name="housePrices"
+                                           th:value="${creditRequestDTO.getHousePrices()}"
+                                           readonly
+                                           type="number">
+                                    <label for="housePrices">House Prices:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control"
+                                           id="quotaValue"
+                                           name="quotaValue"
+                                           th:value="${creditRequestDTO.getQuotaValue()}"
+                                           readonly
+                                           type="number">
+                                    <label for="quotaValue">Quota Value:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control"
+                                           id="coupleSavings"
+                                           name="coupleSavings"
+                                           th:value="${creditRequestDTO.getCoupleSavings()}"
+                                           readonly
+                                           type="number">
+                                    <label for="coupleSavings">Couple Savings:</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control"
+                                           id="countReviewsCS"
+                                           name="countReviewsCS"
+                                           th:value="${creditRequestDTO.getCountReviewsCS()}"
+                                           readonly
+                                           type="text">
+                                    <label for="countReviewsCS">Count Review:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="coupleName"
+                                           name="coupleName"
+                                           th:value="${creditRequestDTO.getCoupleName1() +' y '+ creditRequestDTO.getCoupleName2()}"
+                                           readonly
+                                           type="text">
+                                    <label for="coupleName">Couple's Names:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="coupleEmail1"
+                                           name="coupleEmail1"
+                                           th:value="${creditRequestDTO.getCoupleEmail1()}"
+                                           readonly
+                                           type="text">
+                                    <label for="coupleEmail1">Couple Email 1:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="coupleEmail2"
+                                           name="coupleEmail2"
+                                           th:value="${creditRequestDTO.getCoupleEmail2()}"
+                                           readonly
+                                           type="text">
+                                    <label for="coupleEmail2">Couple Email 2:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="marriageYears"
+                                           name="marriageYears"
+                                           th:value="${creditRequestDTO.getMarriageYears()}"
+                                           readonly
+                                           type="number">
+                                    <label for="marriageYears">Years of Marriage:</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" disabled
+                                            id="bothEmployees" name="bothEmployees">
+                                        <option th:selected="${creditRequestDTO.getBothEmployees() == true}">Yes
+                                        </option>
+                                        <option th:selected="${creditRequestDTO.getBothEmployees() == false}">No
+                                        </option>
+                                    </select>
+                                    <label for="bothEmployees">Both Employed:</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-evenly">
+                                                       <button class="btn btn-success" id="approveButton" type="submit">
+                                <i class="fa-solid fa-circle-check mx-1"></i>
+                                <span>Approve</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<th:block layout:fragment="page-scripts">
+    <script th:src="@{js/modals/Treasury.js}"></script>
+</th:block>
+</body>
+</html>

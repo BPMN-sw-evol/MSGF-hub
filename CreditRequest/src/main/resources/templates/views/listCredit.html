@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head th:replace="layout/layout :: head">
+    <meta charset="UTF-8">
+    <title>Credit Form</title>
+</head>
+<body>
+
+<section class="nombreClass">
+    <div class="container-fluid" layout:fragment="views">
+        <div class="col mt-4 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h1 class="text-center">Application History</h1>
+                    </div>
+                </div>
+                <div class="card-body card-text mt-3 d-flex align-items-center justify-content-center">
+                    <div class="text-center">
+                        <h1>You can view your credits requests here.</h1>
+                        <h3>Couple ID 1: <span th:text="${people[0].getId()}"></span></h3>
+                        <h3>Couple ID 2: <span th:text="${people[1].getId()}"></span></h3>
+                        <br>
+                        <button id="editCredit" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            <i class="fa-solid fa-pen mx-1"></i>
+                            <span>Edit Current Request</span>
+                        </button>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <form id="routing" method="get">
+                        <table class="table table-striped" id="creditTable">
+                            <thead>
+                            <tr class="text-center">
+                                <th scope="col">Credit Cod</th>
+                                <th scope="col">House Price</th>
+                                <th scope="col">Quota Value</th>
+                                <th scope="col">Request Date</th>
+                                <th scope="col">Count Reviews</th>
+                                <th scope="col">State</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="text-center" th:each="creditRequest : ${creditInfo}" th:data-credit-request="${creditRequest}">
+                                <td><span th:text="${creditRequest.processId}"></span></td>
+                                <td><span th:text="${creditRequest.housePrices}"></span></td>
+                                <td><span th:text="${creditRequest.quotaValue}"></span></td>
+                                <td><span th:text="${creditRequest.requestDate}"></span></td>
+                                <td><span th:text="${creditRequest.countReviewCR}"></span></td>
+                                <td><span th:text="${creditRequest.status}"></span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <input type="hidden" name="taskId" id="taskId" />
+
+
+                        <div class="text-center">
+                            <button id="confirmRequest" class="btn btn-danger" type="submit" onclick="enviarFilaConEstadoDraft()">
+                                <i class="fa-solid fa-circle-check mx-1"></i>
+                                <span>Confirm Request</span>
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+
+
+
+
+            </div>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form id="personForm" th:action="@{/credit_request/update}" th:object="${creditInfoDTO}" method="post" enctype="multipart/form-data"
+                              onsubmit="return validateFormField(this);">
+
+                            <div class="modal-body">
+                                <div th:replace="fragments/formCredit.html"></div>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-around">
+                                <button id="submitBothForms" type="submit" class="btn btn-primary"
+                                        onclick="submitFormExternally()">Send message
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<th:block layout:fragment="page-scripts">
+    <script th:src="@{js/validationsFormCredits.js}"></script>
+    <script th:src="@{js/ListCredits.js}"></script>
+    <script th:src="@{js/start-instance.js}"></script>
+</th:block>
+</body>
+</html>
