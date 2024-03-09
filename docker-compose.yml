@@ -1,0 +1,76 @@
+# MSGF case study
+# Configuration for running with docker compose 
+
+version: '3.3'
+
+services:
+  bpm_engine_db:
+    image: postgres:16.2
+    container_name: engine_db
+    environment:
+      POSTGRES_DB: bpm_engine
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - bpm_engine_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - my_network
+
+  credit_request_db:
+    image: postgres:16.2
+    container_name: credit_db
+    environment:
+      POSTGRES_DB: credit_request
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - credit_request_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - my_network
+
+  bpm_engine:
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./BPM-Engine:/app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://engine_db:5432/camunda_engine
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      CAMUNDA_BPM_DATABASE_TYPE: postgres
+      CAMUNDA_BPM_DATABASE_SCHEMA_UPDATE: true
+      CAMUNDA_BPM_ADMIN_USER_ID: demo
+      CAMUNDA_BPM_ADMIN_USER_PASSWORD: demo
+      LOGGING_LEVEL_ORG_CAMUNDA_BPM_ENGINE_IMPL_PERSISTENCE_ENTITY: DEBUG
+      LOGGING_LEVEL_ORG_CAMUNDA_BPM_ENGINE_IMPL_HISTORY_EVENT: TRACE
+      SERVER_PORT: 9000
+      EMAIL_ADDRESS: securedigitaldocs@gmail.com
+      EMAIL_PASSWORD: bsqdckybksteviio
+    depends_on:
+      bpm_engine_db:
+          condition: service_healthy
+      credit_request_db:
+          condition: service_healthy
+
+volumes:
+  bpm_engine_data:
+  credit_request_data:
+
+networks:
+  my_network:
