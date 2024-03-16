@@ -1,0 +1,54 @@
+
+#nombre del pipeline
+name: ejemplo
+
+# evento que dispara el pipeline
+on:
+    workflow_dispatch
+
+# tareas
+#   integración continua -- retroalimentación temprana
+#       - compilar
+#       - probar
+#   delivery continuo -- empaquetar y hacer disponible
+#       - publicar los paquetes
+#       - publicar las imágenes de VMs o de docker, o de ...
+#   despliegue continuo -- continuidad de servicio
+#       - despliegue -- roll forward
+#       - roll back
+#       - contingencia
+jobs:
+
+    compilar:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: descargar el código fuente
+              uses: actions/checkout@v3
+
+            - name: Configure Java
+              uses: actions/setup-java@v3
+              with:
+                java-version: '17'
+                distribution: 'temurin'
+                server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+                settings-path: ${{ github.workspace }} # location for the settings.xml file
+        
+            - name: Build with Maven
+              run: mvn -B package --file pom.xml -DSkipTests
+        
+
+            # - name: Publish to GitHub Packages Apache Maven
+            #  run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+            #  env:
+            #    GITHUB_TOKEN: ${{ github.token }}
+    
+            - name: Build the Docker image
+              run: |
+                docker compose build
+                # docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
+            # - name: docker login
+
+            # - name: docker push
+            
