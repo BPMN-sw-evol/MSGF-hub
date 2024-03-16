@@ -44,12 +44,13 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/dockerfile-engine
+    container_name: bpm_engine
     ports:
       - "9000:9000"
-    volumes:
-      - ./BPM-Engine:/app
+    # volumes:
+    #  - ./BPM-Engine:/app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://bpm_engine_db:5432/bpm_engine
+      SPRING_DATASOURCE_URL: jdbc:postgresql://engine_db:5432/bpm_engine
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: admin
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
@@ -74,14 +75,14 @@ services:
       dockerfile: dockerfiles/dockerfile-creditrequest
     ports:
       - "9001:9001"
-    volumes:
-      - ./CreditRequest:/app
+    # volumes:
+    #  - ./CreditRequest:/app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://credit_request_db:5432/credit_request
+      SPRING_DATASOURCE_URL: jdbc:postgresql://credit_db:5432/credit_request
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: admin
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
-      CAMUNDA_URL: http://localhost:9000/engine-rest/
+      CAMUNDA_URL: http://bpm_engine:9000/engine-rest/
       SERVER_PORT: 9001
       SPRING_SERVLET_MULTIPART_ENABLED: true
       SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE: 10MB
@@ -98,14 +99,14 @@ services:
       dockerfile: dockerfiles/dockerfile-centralsys
     ports:
       - "9003:9003"
-    volumes:
-      - ./CentralSys:/app
+    # volumes:
+    #   - ./CentralSys:/app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://credit_request_db:5432/credit_request
+      SPRING_DATASOURCE_URL: jdbc:postgresql://credit_db:5432/credit_request
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: admin
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
-      CAMUNDA_URL: http://localhost:9000/engine-rest/
+      CAMUNDA_URL: http://bpm_engine:9000/engine-rest/
       SERVER_PORT: 9003
       SERVER_ERROR_WHITELABEL_ENABLED: false
 
@@ -119,14 +120,14 @@ services:
       dockerfile: dockerfiles/dockerfile-treasury
     ports:
       - "9004:9004"
-    volumes:
-      - ./CreditRequest:/app
+    # volumes:
+    #  - ./CreditRequest:/app
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://credit_request_db:5432/credit_request
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: admin
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
-      CAMUNDA.URL: http://localhost:9000/engine-rest/
+      CAMUNDA.URL: http://bpm_engine:9000/engine-rest/
       SERVER_PORT: 9001
       EMAIL_ADDRESS: securedigitaldocs@gmail.com
       EMAIL_PASSWORD: bsqdckybksteviio
