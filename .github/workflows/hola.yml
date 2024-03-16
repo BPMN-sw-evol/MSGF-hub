@@ -1,6 +1,6 @@
 
 #nombre del pipeline
-name: ejemplo
+name: Hola mundo
 
 # evento que dispara el pipeline
 on:
