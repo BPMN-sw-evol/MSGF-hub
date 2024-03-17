@@ -6,10 +6,11 @@ version: '3.3'
 services:
   bpm_engine_db:
     image: postgres:16.2
-    container_name: engine_db
+    container_name: bpm_engine_db
+    user: postgres
     environment:
       POSTGRES_DB: bpm_engine
-      POSTGRES_USER: postgres
+#      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
     ports:
       - "5432:5432"
@@ -25,11 +26,13 @@ services:
 
   credit_request_db:
     image: postgres:16.2
-    container_name: credit_db
+    container_name: credit_request_db
+    user: postgres
     environment:
       POSTGRES_DB: credit_request
-      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
+    ports:
+      - "5433:5432"
     volumes:
       - credit_request_data:/var/lib/postgresql/data
     healthcheck:
@@ -50,7 +53,7 @@ services:
     # volumes:
     #  - ./BPM-Engine:/app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://engine_db:5432/bpm_engine
+      SPRING_DATASOURCE_URL: jdbc:postgresql://bpm_engine_db:5432/bpm_engine
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: admin
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
@@ -63,22 +66,26 @@ services:
       SERVER_PORT: 9000
       EMAIL_ADDRESS: securedigitaldocs@gmail.com
       EMAIL_PASSWORD: bsqdckybksteviio
+
     depends_on:
       bpm_engine_db:
           condition: service_healthy
       credit_request_db:
           condition: service_healthy
+    networks:
+      - my_network
 
   credit_request:
     build:
       context: .
       dockerfile: dockerfiles/dockerfile-creditrequest
+    container_name: credit_request
     ports:
       - "9001:9001"
     # volumes:
     #  - ./CreditRequest:/app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://credit_db:5432/credit_request
+      SPRING_DATASOURCE_URL: jdbc:postgresql://credit_request_db:5432/credit_request
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: admin
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
@@ -92,32 +99,37 @@ services:
     depends_on:
       credit_request_db:
         condition: service_healthy
-
+    networks:
+      - my_network
+#
   central_sys:
     build:
       context: .
       dockerfile: dockerfiles/dockerfile-centralsys
+    container_name: central_sys
     ports:
       - "9003:9003"
     # volumes:
     #   - ./CentralSys:/app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://credit_db:5432/credit_request
+      SPRING_DATASOURCE_URL: jdbc:postgresql://credit_request_db:5432/credit_request
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: admin
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
       CAMUNDA_URL: http://bpm_engine:9000/engine-rest/
       SERVER_PORT: 9003
       SERVER_ERROR_WHITELABEL_ENABLED: false
-
     depends_on:
       credit_request_db:
         condition: service_healthy
+    networks:
+      - my_network
 
   treasury:
     build:
       context: .
       dockerfile: dockerfiles/dockerfile-treasury
+    container_name: treasury
     ports:
       - "9004:9004"
     # volumes:
@@ -134,7 +146,8 @@ services:
     depends_on:
       credit_request_db:
         condition: service_healthy
-
+    networks:
+      - my_network
 volumes:
   bpm_engine_data:
   credit_request_data:
