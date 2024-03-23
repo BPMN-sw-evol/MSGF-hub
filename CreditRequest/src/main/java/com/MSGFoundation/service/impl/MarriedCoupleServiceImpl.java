@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.msgfoundation.annotations.BPMNSetterVariables;
 import com.msgfoundation.annotations.BPMNTask;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -34,13 +33,13 @@ public class MarriedCoupleServiceImpl implements MarriedCoupleService {
     private final RestTemplate restTemplate;
     private final CreditRequestServiceImpl creditRequestService;
 
-    @Value("${camunda.url:http://localhost:9000/engine-rest/}")
+    @Value("${camunda.url:http://bpmengine:9000/engine-rest/}")
     private String camundaUrl;
-    @Value("${spring.datasource.url}")
+    @Value("${spring.datasource.url:jdbc:postgresql://credit_request_db:5432/credit_request}")
     private String databaseUrl;
-    @Value("${spring.datasource.username}")
+    @Value("${spring.datasource.username:postgres}")
     private String databaseUser;
-    @Value("${spring.datasource.password}")
+    @Value("${spring.datasource.password:admin}")
     private String databasePassword;
 
     private List<TaskInfo> tasksList = new ArrayList<>();
@@ -78,7 +77,7 @@ public class MarriedCoupleServiceImpl implements MarriedCoupleService {
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
         try {
-            ResponseEntity<Map> response = restTemplate.postForEntity(camundaUrl+"process-definition/key/MSGF-CreditRequest/start", requestEntity, Map.class);
+            ResponseEntity<Map> response = restTemplate.postForEntity("http://bpmengine:9000/engine-rest/"+"process-definition/key/MSGF-CreditRequest/start", requestEntity, Map.class);
             String processId = String.valueOf(response.getBody().get("id"));
             TaskInfo taskInfo = getTaskInfoByProcessIdWithApi(processId);
             setAssignee(taskInfo.getTaskId(), "MarriedCouple");
@@ -223,7 +222,7 @@ public class MarriedCoupleServiceImpl implements MarriedCoupleService {
             HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
             try {
-                ResponseEntity<Map> response = restTemplate.postForEntity(camundaUrl+"/task/"+taskId+"/complete", requestEntity, Map.class);
+                ResponseEntity<Map> response = restTemplate.postForEntity("http://bpmengine:9000/engine-rest"+"/task/"+taskId+"/complete", requestEntity, Map.class);
                 TaskInfo taskInfo1 = getTaskInfoByProcessIdWithApi(processId);
                 setAssignee(taskInfo1.getTaskId(), "CreditAnalyst");
                 updateReviewAndStatus(processId,"Revisar detalles de solicitud");
@@ -294,7 +293,7 @@ public class MarriedCoupleServiceImpl implements MarriedCoupleService {
         System.out.println("database url: "+databaseUrl);
         System.out.println("database user: "+databaseUser);
         System.out.println("database passwprd: "+databasePassword);
-        Connection connection = DriverManager.getConnection(databaseUrl, databaseUser, databasePassword);
+        Connection connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
 
         String updateQuery = "UPDATE credit_request SET status = ? WHERE process_id = ?";
 

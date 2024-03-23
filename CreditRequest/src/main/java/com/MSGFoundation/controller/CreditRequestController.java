@@ -96,7 +96,7 @@ public class CreditRequestController {
         List<CreditRequest> updateCredit = creditRequestService.findCreditByCouple(couple);
         creditInfoDTO.setCodRequest(updateCredit.get(0).getCodRequest());
         String processId = marriedCoupleService.startProcessInstance(creditInfoDTO);
-
+        System.out.println("***** PROCESS IDD: "+processId);
         for (CreditRequest request : updateCredit) {
             if ("DRAFT".equals(request.getStatus())) {
                 request.setProcessId(processId);

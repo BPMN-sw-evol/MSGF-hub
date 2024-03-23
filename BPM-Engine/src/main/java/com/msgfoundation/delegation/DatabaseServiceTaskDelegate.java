@@ -1,7 +1,9 @@
 package com.msgfoundation.delegation;
 
 
-import com.msgfoundation.annotations.*;
+import com.msgfoundation.annotations.BPMNGetterVariables;
+import com.msgfoundation.annotations.BPMNSetterVariables;
+import com.msgfoundation.annotations.BPMNTask;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +21,7 @@ public class DatabaseServiceTaskDelegate implements JavaDelegate {
 
     @BPMNGetterVariables(variables = {"quotaValue", "housePrices", "coupleSavings"})
     public ResultSet getterVariables(Long codRequest) throws SQLException{
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/credit_request", "postgres", "admin");
+        Connection connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
 
         String query = "SELECT couple_savings, house_prices, quota_value FROM credit_request WHERE cod_request = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);

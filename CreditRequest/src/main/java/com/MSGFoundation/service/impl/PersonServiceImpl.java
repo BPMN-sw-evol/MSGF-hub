@@ -1,7 +1,7 @@
 package com.MSGFoundation.service.impl;
 
-import com.MSGFoundation.repository.IPersonRepository;
 import com.MSGFoundation.model.Person;
+import com.MSGFoundation.repository.IPersonRepository;
 import com.MSGFoundation.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

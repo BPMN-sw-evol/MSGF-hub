@@ -22,7 +22,7 @@ public class PaymentService {
     private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
     public void updatePayment(Long codRequest) throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/credit_request", "postgres", "admin");
+        Connection connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
 
         String updateQuery = "UPDATE credit_request SET payment = true WHERE cod_request = ?";
 

@@ -1,10 +1,9 @@
 package com.MSGFoundation.controller;
 
-import com.MSGFoundation.model.Couple;
 import com.MSGFoundation.dto.CoupleDTO;
+import com.MSGFoundation.model.Couple;
 import com.MSGFoundation.service.impl.CoupleServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

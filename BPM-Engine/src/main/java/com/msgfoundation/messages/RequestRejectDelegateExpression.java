@@ -15,8 +15,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Locale;
 
-import java.time.LocalDateTime;
-
 @Service("requestReject")
 @BPMNTask(type="Send Task", name="Informar solicitud anulada por incumplimiento")
 public class RequestRejectDelegateExpression implements JavaDelegate {

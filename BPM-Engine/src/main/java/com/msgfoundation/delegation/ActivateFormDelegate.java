@@ -32,7 +32,7 @@ public class ActivateFormDelegate implements JavaDelegate {
 
     private void updateStatusToDraft(Long codRequest) throws SQLException {
         System.out.println("Your credit status has been updated");
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/credit_request", "postgres", "admin");
+        Connection connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
 
         String updateQuery = "UPDATE credit_request SET status = 'DRAFT' WHERE cod_request = ?";
         try (PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
