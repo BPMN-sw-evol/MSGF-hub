@@ -64,4 +64,8 @@ To use this program you must:
 
 4. Wait a moment while the images and containers are built and the services are launched. This depends on your computing power.
    
-5. You are done! After that you can interact with the MSG-Foundation systems. 
+5. You are done! After that you can interact with the MSG-Foundation systems.
+   -   MSGF-BPM-Engine works on port 9000.
+   -   MSGF-CreditRequest works on port 9001.
+   -   MSGF-CentralSys works on port 9002.
+   -   MSGF-Treasury works on port 9004.
