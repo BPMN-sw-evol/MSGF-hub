@@ -14,35 +14,37 @@ import javax.mail.internet.MimeMessage;
 import java.util.Locale;
 
 @Component
-public class RequestInviableDelegate implements JavaDelegate {
+@BPMNTask(type = "sendTask", name = "Informar concepto jurídico no viable")
+public class LegalOffice_InfConJurNoVia implements JavaDelegate {
     @Autowired
     private JavaMailSender mailSender;
     @Autowired
     private TemplateEngine templateEngine;
     @Override
+    @BPMNGetterVariables(variables = { "coupleName1", "coupleName2", "coupleEmail2", "coupleEmail1" })
+    @BPMNGetterVariables( variables = { "coupleName1", "coupleName2", "coupleEmail2", "coupleEmail1" })
     public void execute(DelegateExecution delegateExecution) throws Exception {
         // Obtener variables del proceso
-        String processID = (String) delegateExecution.getProcessInstanceId();
+        String processID = delegateExecution.getProcessInstanceId();
         String coupleName1 = (String) delegateExecution.getVariable("coupleName1");
         String coupleName2 = (String) delegateExecution.getVariable("coupleName2");
         String coupleEmail1 = (String) delegateExecution.getVariable("coupleEmail1");
         String coupleEmail2 = (String) delegateExecution.getVariable("coupleEmail2");
-        Long coupleSavings = (Long) delegateExecution.getVariable("coupleSavings");
-        Long quotaValue = (Long) delegateExecution.getVariable("quotaValue");
-        Long housePrices = (Long) delegateExecution.getVariable("housePrices");
+        Boolean bothEmployees = (Boolean) delegateExecution.getVariable("bothEmployees");
+        String pdfSupport = (String) delegateExecution.getVariable("pdfSupport");
+
 
         // Construir el mensaje de correo electrónico usando Thymeleaf
-        String subject = "Informe de Rechazo por Oficina Legal - Inviabilidad";
-        String templateName = "InformeRechazoLegalInviable";
+        String subject = "Informe de Rechazo por Comité de Crédito";
+        String templateName = "InformeRechazoComite";
         Context context = new Context(Locale.getDefault());
         context.setVariable("processId",processID);
         context.setVariable("coupleName1", coupleName1);
         context.setVariable("coupleName2", coupleName2);
         context.setVariable("coupleEmail1", coupleEmail1);
         context.setVariable("coupleEmail2", coupleEmail2);
-        context.setVariable("coupleSavings", coupleSavings);
-        context.setVariable("quotaValue", quotaValue);
-        context.setVariable("housePrices", housePrices);
+        context.setVariable("bothEmployees", bothEmployees);
+        context.setVariable("pdfSupport", pdfSupport);
 
         String message = templateEngine.process(templateName, context);
 

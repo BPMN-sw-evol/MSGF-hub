@@ -1,12 +1,13 @@
 package com.MSGFCentralSys.MSGFCentralSys.services;
 
-import com.msgfoundation.annotations.*;
 import com.MSGFCentralSys.MSGFCentralSys.dto.CreditRequestDTO;
 import com.MSGFCentralSys.MSGFCentralSys.dto.TaskInfo;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.msgfoundation.annotations.BPMNGetterVariables;
+import com.msgfoundation.annotations.BPMNSetterVariables;
+import com.msgfoundation.annotations.BPMNTask;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,8 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-@BPMNTask(type = "UserTask",name = "Revisar detalles de solicitud")
-public class CreditAnalystServices {
+@BPMNTask(type = "userTask", name = "Determinar viabilidad financiera")
+public class LegalOffice_DetViaFin {
     private final RestTemplate restTemplate;
     private List<TaskInfo> tasksList = new ArrayList<>();
 
@@ -50,7 +51,7 @@ public class CreditAnalystServices {
         return processIds;
     }
 
-    @BPMNGetterVariables(container = "CreditRequestDTO", variables = {"coupleName1", "coupleName2", "coupleEmail1", "coupleEmail2", "marriageYears", "bothEmployees", "creationDate", "countReviewsBpm"})
+    @BPMNGetterVariables(container = "CreditRequestDTO", variables = {"coupleName1", "coupleName2", "coupleEmail1", "coupleEmail2", "marriageYears", "bothEmployees", "housePrices", "quotaValue", "coupleSavings", "creationDate", "countReviewsBpm"})
     public CreditRequestDTO getProcessVariablesById(String processId) {
         String CAMUNDA_API_URL = "http://bpmengine:9000/engine-rest/";
         String camundaURL = CAMUNDA_API_URL + "process-instance/" + processId + "/variables?deserializeValues=true";
@@ -82,6 +83,18 @@ public class CreditAnalystServices {
             Map<String, Object> bothEmployeesMap = (Map<String, Object>) variablesMap.get("bothEmployees");
             Boolean bothEmployeesValue = (Boolean) bothEmployeesMap.get("value");
             creditRequest.setBothEmployees(bothEmployeesValue);
+
+            Map<String, Object> housePricesMap = (Map<String, Object>) variablesMap.getOrDefault("housePrices", Collections.singletonMap("value", 0));
+            Integer housePricesValue = (Integer) housePricesMap.get("value");
+            creditRequest.setHousePrices(housePricesValue != null ? housePricesValue.longValue() : 0);
+
+            Map<String, Object> quotaValueMap = (Map<String, Object>) variablesMap.getOrDefault("quotaValue", Collections.singletonMap("value", 0));
+            Integer quotaValueValue = (Integer) quotaValueMap.get("value");
+            creditRequest.setQuotaValue(quotaValueValue != null ? quotaValueValue.longValue() : 0);
+
+            Map<String, Object> coupleSavingsMap = (Map<String, Object>) variablesMap.getOrDefault("coupleSavings", Collections.singletonMap("value", 0));
+            Integer coupleSavingsValue = (Integer) coupleSavingsMap.get("value");
+            creditRequest.setCoupleSavings(coupleSavingsValue != null ? coupleSavingsValue.longValue() : 0);
 
             Map<String, Object> requestDateMap = (Map<String, Object>) variablesMap.get("creationDate");
             String requestDateValue = (String) requestDateMap.get("value");
@@ -206,9 +219,8 @@ public class CreditAnalystServices {
         }
     }
 
-    @BPMNSetterVariables(variables = "allFine")
+    @BPMNSetterVariables( variables = { "legalConcept" })
     public String approveTask(String processId) {
-
         TaskInfo taskInfo = getTaskInfoByProcessId(processId);
 
         if (taskInfo != null) {
@@ -218,10 +230,10 @@ public class CreditAnalystServices {
 
             Map<String, Object> requestBody = new HashMap<>();
             Map<String, Object> variables = new HashMap<>();
-            Map<String, Object> allFine = new HashMap<>();
-            allFine.put("value", true);
-            allFine.put("type", "Boolean");
-            variables.put("allFine", allFine);
+            Map<String, Object> legalConcept = new HashMap<>();
+            legalConcept.put("value", true);
+            legalConcept.put("type", "Boolean");
+            variables.put("legalConcept", legalConcept);
             requestBody.put("variables", variables);
             HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
@@ -232,13 +244,14 @@ public class CreditAnalystServices {
 
                 if (newTaskId != null) {
                     updateTaskByProcessId(processId, newTaskId);
-                    setAssignee(newTaskId, "CreditCommittee");
-                    updateReviewAndStatus(processId,"Evaluar crédito");
+                    setAssignee(newTaskId, "Treasury");
+                    updateReviewAndStatus(processId,"Aprobar proceso de pago");
                     updateCountReviewsBpm(processId);
                 }
                 return "";
             } catch (HttpClientErrorException e) {
-                System.err.println("Error during task completion: " + e.getMessage());
+                String errorMessage = e.getResponseBodyAsString();
+                System.err.println("Error during task completion: " + errorMessage);
                 return null;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -249,7 +262,7 @@ public class CreditAnalystServices {
         }
     }
 
-    @BPMNSetterVariables(variables = "allFine")
+    @BPMNSetterVariables( variables = { "legalConcept" })
     public String rejectTask(String processId) {
         TaskInfo taskInfo = getTaskInfoByProcessId(processId);
 
@@ -260,28 +273,28 @@ public class CreditAnalystServices {
 
             Map<String, Object> requestBody = new HashMap<>();
             Map<String, Object> variables = new HashMap<>();
-            Map<String, Object> allFine = new HashMap<>();
-            allFine.put("value", false);
-            allFine.put("type", "Boolean");
-            variables.put("allFine", allFine);
+            Map<String, Object> legalConcept = new HashMap<>();
+            legalConcept.put("value", false);
+            legalConcept.put("type", "Boolean");
+            variables.put("legalConcept", legalConcept);
             requestBody.put("variables", variables);
             HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
             try {
                 String camundaUrl = "http://bpmengine:9000/engine-rest/task/" + taskId + "/complete";
-                updateReviewAndStatus(processId,"DRAFT");
-                updateCountReviewsBpm(processId);
                 restTemplate.postForEntity(camundaUrl, requestEntity, Map.class);
                 String newTaskId = getTaskIdByProcessIdWithApi(processId);
 
                 if (newTaskId != null) {
                     updateTaskByProcessId(processId, newTaskId);
-                    setAssignee(newTaskId, "CreditAnalyst");
-
+                    setAssignee(newTaskId, "LegalOfficeViability");
+                    updateReviewAndStatus(processId, "Rechazo de solicitud por viabilidad financiera");
+                    updateCountReviewsBpm(processId);
                 }
                 return "";
             } catch (HttpClientErrorException e) {
-                System.err.println("Error during task completion: " + e.getMessage());
+                String errorMessage = e.getResponseBodyAsString();
+                System.err.println("Error during task completion: " + errorMessage);
                 return null;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -311,6 +324,7 @@ public class CreditAnalystServices {
             }
         }
     }
+
     public void updateCountReviewsBpm(String processId) {
         // Obtener el nuevo valor de countReviewsBpm desde la base de datos
         long countReviewsBpm = getCountReviewsBpmFromDatabase(processId);
@@ -397,5 +411,4 @@ public class CreditAnalystServices {
 
         return countReviewsBpm;
     }
-
 }

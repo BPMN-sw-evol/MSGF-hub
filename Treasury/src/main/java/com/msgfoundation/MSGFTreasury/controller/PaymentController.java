@@ -1,7 +1,7 @@
 package com.msgfoundation.MSGFTreasury.controller;
 
 import com.msgfoundation.MSGFTreasury.model.Payment;
-import com.msgfoundation.MSGFTreasury.services.PaymentService;
+import com.msgfoundation.MSGFTreasury.services.Treasury_InfDesAParYAVen;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,17 +11,17 @@ import java.sql.SQLException;
 @RequestMapping("/payment")
 @RequiredArgsConstructor
 public class PaymentController {
-    private final PaymentService paymentService;
+    private final Treasury_InfDesAParYAVen treasuryInfDesAParYAVen;
     @PostMapping("/message")
     public String paymentMessage(@RequestBody Payment payment){
         System.out.println("pago realizado: "+payment);
-        this.paymentService.sendPaymentNotification(payment);
+        this.treasuryInfDesAParYAVen.sendPaymentNotification(payment);
         return "MESSAGE: The payment was sent";
     }
 
     @GetMapping("/update/{codRequest}")
     public String paymentSuccessfully(@PathVariable Long codRequest) throws SQLException {
-        paymentService.updatePayment(codRequest);
+        treasuryInfDesAParYAVen.updatePayment(codRequest);
         return "CONTROLLER: The payment was made";
     }
 

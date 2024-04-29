@@ -19,9 +19,9 @@ import java.sql.*;
 import java.util.*;
 
 @Service
-@BPMNTask(type = "UserTask",name = "Aprobar proceso de pago")
 @RequiredArgsConstructor
-public class TreasuryServices {
+@BPMNTask(type = "userTask", name = "Aprobar proceso de pago")
+public class Treasury_AprProDePag {
     private final RestTemplate restTemplate;
     private List<TaskInfo> tasksList = new ArrayList<>();
 

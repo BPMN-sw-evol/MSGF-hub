@@ -109,7 +109,7 @@
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P15D</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
-    <bpmn:sendTask id="Activity_0wssoib" name="Informar rechazo de solicitud" camunda:class="com.msgfoundation.messages.RequestRejectByCommitteeDelegate">
+    <bpmn:sendTask id="Activity_0wssoib" name="Informar rechazo de solicitud" camunda:class="com.msgfoundation.messages.LegalOffice_InfConJurNoVia">
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="coupleName1">${coupleName1}</camunda:inputParameter>
@@ -137,7 +137,7 @@
       <bpmn:incoming>Flow_0o73rnw</bpmn:incoming>
       <bpmn:outgoing>Flow_16ma7yp</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:sendTask id="Activity_1es89wk" name="Informar concepto jurídico no viable" camunda:class="com.msgfoundation.messages.RequestInviableDelegate">
+    <bpmn:sendTask id="Activity_1es89wk" name="Informar concepto jurídico no viable" camunda:class="com.msgfoundation.messages.CreditCommittee_InfRecDeSol">
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="coupleName1">${coupleName1}</camunda:inputParameter>
@@ -277,7 +277,7 @@
       <bpmn:incoming>Flow_1wcz3tr</bpmn:incoming>
       <bpmn:outgoing>Flow_0wl7aew</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_0pz6k7s" name="Consultar información financiera" camunda:class="com.msgfoundation.delegation.DatabaseServiceTaskDelegate">
+    <bpmn:serviceTask id="Activity_0pz6k7s" name="Consultar información financiera" camunda:class="com.msgfoundation.delegation.CreditCommittee_ConInfFin">
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:outputParameter name="coupleSavings">${coupleSavingsOutput}</camunda:outputParameter>
@@ -337,7 +337,7 @@
       <bpmn:outgoing>Flow_1kkqgw1</bpmn:outgoing>
       <bpmn:outgoing>Flow_1tsxxym</bpmn:outgoing>
     </bpmn:eventBasedGateway>
-    <bpmn:sendTask id="Activity_0n39p7y" name="Informar inconsistencias" camunda:class="com.msgfoundation.messages.InconsistenciesDelegate">
+    <bpmn:sendTask id="Activity_0n39p7y" name="Informar inconsistencias" camunda:class="com.msgfoundation.messages.CreditAnalyst_InfInc">
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="coupleName1">${coupleName1}</camunda:inputParameter>

@@ -11,7 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Service("activateForm")
-public class ActivateFormDelegate implements JavaDelegate {
+@BPMNTask(type = "serviceTask", name = "Habilitar edición formulario")
+public class CreditAnalyst_HabEdiFor implements JavaDelegate {
     @Value("${spring.datasource.url}")
     private String databaseUrl;
     @Value("${spring.datasource.username}")
@@ -19,6 +20,8 @@ public class ActivateFormDelegate implements JavaDelegate {
     @Value("${spring.datasource.password}")
     private String databasePassword;
     @Override
+    @BPMNGetterVariables(variables = { "codRequest" })
+    @BPMNGetterVariables( variables = { "codRequest" })
     public void execute(DelegateExecution delegateExecution) throws Exception {
         Long codRequest = (Long) delegateExecution.getProcessInstance().getVariables().get("codRequest");
         if (codRequest != null) {

@@ -2,7 +2,7 @@ package com.MSGFCentralSys.MSGFCentralSys.controller;
 
 import com.MSGFCentralSys.MSGFCentralSys.dto.CreditRequestDTO;
 import com.MSGFCentralSys.MSGFCentralSys.dto.TaskInfo;
-import com.MSGFCentralSys.MSGFCentralSys.services.LegalOfficeViabilityServices;
+import com.MSGFCentralSys.MSGFCentralSys.services.LegalOffice_DetViaFin;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,20 +17,20 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class LegalOfficeViabilityController {
-    private final LegalOfficeViabilityServices legalOfficeViabilityServices;
+    private final LegalOffice_DetViaFin legalOfficeDetViaFin;
     List<CreditRequestDTO> processVariablesListCA = new ArrayList<>();
 
 
     @GetMapping("/legal-office-viability")
     public String CreditAnalystValidateView(Model model) throws IOException {
 
-        List<String> processIds = this.legalOfficeViabilityServices.getAllProcessByActivityId("Activity_012ypn5");
+        List<String> processIds = this.legalOfficeDetViaFin.getAllProcessByActivityId("Activity_012ypn5");
         System.out.println(processIds.toString());
         processVariablesListCA.clear();
         // Iterar a través de los processIds y obtener las variables para cada uno
         for (String processId : processIds) {
-            CreditRequestDTO creditRequestDTO = this.legalOfficeViabilityServices.getProcessVariablesById(processId);
-            TaskInfo taskInfo = this.legalOfficeViabilityServices.getTaskInfoByProcessId(processId);
+            CreditRequestDTO creditRequestDTO = this.legalOfficeDetViaFin.getProcessVariablesById(processId);
+            TaskInfo taskInfo = this.legalOfficeDetViaFin.getTaskInfoByProcessId(processId);
             creditRequestDTO.setTaskInfo(taskInfo);
             processVariablesListCA.add(creditRequestDTO);
         }
@@ -44,8 +44,8 @@ public class LegalOfficeViabilityController {
 
     @PostMapping("/view-legal-office-viability")
     public  String viewTaskValidate(@RequestParam(name = "processId") String processId, Model model){
-        CreditRequestDTO creditRequestDTO = this.legalOfficeViabilityServices.getProcessVariablesById(processId);
-        TaskInfo taskInfo = this.legalOfficeViabilityServices.getTaskInfoByProcessId(processId);
+        CreditRequestDTO creditRequestDTO = this.legalOfficeDetViaFin.getProcessVariablesById(processId);
+        TaskInfo taskInfo = this.legalOfficeDetViaFin.getTaskInfoByProcessId(processId);
         creditRequestDTO.setTaskInfo(taskInfo);
         model.addAttribute("creditRequestDTO", creditRequestDTO);
         model.addAttribute("titulo", "DETERMINE FINANCIAL VIABILITY BY LEGAL OFFICE");
@@ -55,13 +55,13 @@ public class LegalOfficeViabilityController {
 
     @PostMapping("/approve-legal-office-viability")
     public String approveTaskValidate(@RequestParam(name = "processId") String processId){
-        this.legalOfficeViabilityServices.approveTask(processId);
+        this.legalOfficeDetViaFin.approveTask(processId);
         return "redirect:/legal-office-viability";
     }
 
     @PostMapping("/reject-legal-office-viability")
     public String rejectTaskValidate(@RequestParam(name = "processId") String processId){
-        this.legalOfficeViabilityServices.rejectTask(processId);
+        this.legalOfficeDetViaFin.rejectTask(processId);
         return "redirect:/legal-office-viability";
     }
 }

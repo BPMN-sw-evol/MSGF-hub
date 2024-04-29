@@ -1,6 +1,7 @@
 package com.msgfoundation.MSGFTreasury.services;
 
 import com.msgfoundation.MSGFTreasury.model.Payment;
+import com.msgfoundation.annotations.BPMNTask;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,8 @@ import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
-public class PaymentService {
+@BPMNTask(type = "sendTask", name = "Informar desembolso a pareja y a vendedor")
+public class Treasury_InfDesAParYAVen {
     private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
     public void updatePayment(Long codRequest) throws SQLException {

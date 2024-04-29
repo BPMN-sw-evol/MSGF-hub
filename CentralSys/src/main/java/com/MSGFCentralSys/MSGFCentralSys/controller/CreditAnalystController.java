@@ -2,7 +2,7 @@ package com.MSGFCentralSys.MSGFCentralSys.controller;
 
 import com.MSGFCentralSys.MSGFCentralSys.dto.CreditRequestDTO;
 import com.MSGFCentralSys.MSGFCentralSys.dto.TaskInfo;
-import com.MSGFCentralSys.MSGFCentralSys.services.CreditAnalystServices;
+import com.MSGFCentralSys.MSGFCentralSys.services.CreditAnalyst_RevDetDeSol;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,19 +16,19 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class CreditAnalystController {
-    private final CreditAnalystServices creditAnalystServices;
+    private final CreditAnalyst_RevDetDeSol creditAnalystRevDetDeSol;
     List<CreditRequestDTO> processVariablesListCA = new ArrayList<>();
 
 
     @GetMapping("/credit-analyst")
     public String CreditAnalystView(Model model){
 
-        List<String> processIds = this.creditAnalystServices.getAllProcessByActivityId("Activity_0h13zv2");
+        List<String> processIds = this.creditAnalystRevDetDeSol.getAllProcessByActivityId("Activity_0h13zv2");
         processVariablesListCA.clear();
         // Iterar a través de los processIds y obtener las variables para cada uno
         for (String processId : processIds) {
-            CreditRequestDTO creditRequestDTO = this.creditAnalystServices.getProcessVariablesById(processId);
-            TaskInfo taskInfo = this.creditAnalystServices.getTaskInfoByProcessId(processId);
+            CreditRequestDTO creditRequestDTO = this.creditAnalystRevDetDeSol.getProcessVariablesById(processId);
+            TaskInfo taskInfo = this.creditAnalystRevDetDeSol.getTaskInfoByProcessId(processId);
             creditRequestDTO.setTaskInfo(taskInfo);
             processVariablesListCA.add(creditRequestDTO);
         }
@@ -41,8 +41,8 @@ public class CreditAnalystController {
 
     @PostMapping("/view-credit-analyst")
     public  String viewTaskCreditAnalyst(@RequestParam(name = "processId") String processId, Model model){
-        CreditRequestDTO creditRequestDTO = this.creditAnalystServices.getProcessVariablesById(processId);
-        TaskInfo taskInfo = this.creditAnalystServices.getTaskInfoByProcessId(processId);
+        CreditRequestDTO creditRequestDTO = this.creditAnalystRevDetDeSol.getProcessVariablesById(processId);
+        TaskInfo taskInfo = this.creditAnalystRevDetDeSol.getTaskInfoByProcessId(processId);
         creditRequestDTO.setTaskInfo(taskInfo);
         model.addAttribute("creditRequestDTO", creditRequestDTO);
         model.addAttribute("titulo", "REVIEW REQUEST DETAILS BY CREDIT ANALYST");
@@ -51,13 +51,13 @@ public class CreditAnalystController {
 
     @PostMapping("/approve-credit-analyst")
     public String approveTaskCreditAnalyst(@RequestParam(name = "processId") String processId){
-        this.creditAnalystServices.approveTask(processId);
+        this.creditAnalystRevDetDeSol.approveTask(processId);
         return "redirect:/credit-analyst";
     }
 
     @PostMapping("/reject-credit-analyst")
     public String rejectTaskCreditAnalyst(@RequestParam(name = "processId") String processId){
-        this.creditAnalystServices.rejectTask(processId);
+        this.creditAnalystRevDetDeSol.rejectTask(processId);
         return "redirect:/credit-analyst";
     }
 }

@@ -26,7 +26,7 @@ public class CreditRequestController {
     private final CreditRequestServiceImpl creditRequestService;
     private final CoupleServiceImpl coupleService;
     private final PersonServiceImpl personService;
-    private final MarriedCoupleServiceImpl marriedCoupleService;
+    private final MarriedCouple_DilForDeSol marriedCoupleService;
     private final S3ServiceImpl s3Service;
 
     @GetMapping("/")

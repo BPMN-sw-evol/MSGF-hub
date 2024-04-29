@@ -1,7 +1,7 @@
 package com.MSGFoundation.controller;
 
 import com.MSGFoundation.dto.CreditInfoDTO;
-import com.MSGFoundation.service.impl.MarriedCoupleServiceImpl;
+import com.MSGFoundation.service.impl.MarriedCouple_DilForDeSol;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ProcessController {
-    private final MarriedCoupleServiceImpl marriedCoupleService;
+    private final MarriedCouple_DilForDeSol marriedCoupleService;
 
-    public ProcessController(MarriedCoupleServiceImpl marriedCoupleService) {
+    public ProcessController(MarriedCouple_DilForDeSol marriedCoupleService) {
         this.marriedCoupleService = marriedCoupleService;
     }
 

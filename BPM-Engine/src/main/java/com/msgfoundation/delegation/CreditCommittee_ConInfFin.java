@@ -1,17 +1,14 @@
 package com.msgfoundation.delegation;
 
 
-import com.msgfoundation.annotations.BPMNGetterVariables;
-import com.msgfoundation.annotations.BPMNSetterVariables;
-import com.msgfoundation.annotations.BPMNTask;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.sql.*;
 
-@BPMNTask(type="ServiceTask", name="Consultar información financiera")
-public class DatabaseServiceTaskDelegate implements JavaDelegate {
+@BPMNTask(type = "serviceTask", name = "Consultar información financiera")
+public class CreditCommittee_ConInfFin implements JavaDelegate {
     @Value("${spring.datasource.url}")
     private String databaseUrl;
     @Value("${spring.datasource.username}")
@@ -19,7 +16,6 @@ public class DatabaseServiceTaskDelegate implements JavaDelegate {
     @Value("${spring.datasource.password}")
     private String databasePassword;
 
-    @BPMNGetterVariables(variables = {"quotaValue", "housePrices", "coupleSavings"})
     public ResultSet getterVariables(Long codRequest) throws SQLException{
         Connection connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
 
@@ -30,7 +26,8 @@ public class DatabaseServiceTaskDelegate implements JavaDelegate {
         return preparedStatement.executeQuery();
     }
 
-    @BPMNSetterVariables(variables = {"quotaValue", "housePrices", "coupleSavings"})
+    @BPMNSetterVariables(variables = { "coupleSavings", "quotaValue" })
+    @BPMNSetterVariables( variables = { "coupleSavings", "quotaValue" })
     public void setterVariables(DelegateExecution execution, ResultSet resultSet) throws SQLException {
         if(resultSet.next()){
             long coupleSavings = resultSet.getLong("couple_savings");
@@ -49,6 +46,8 @@ public class DatabaseServiceTaskDelegate implements JavaDelegate {
         }
     }
     @Override
+    @BPMNGetterVariables(variables = { "codRequest" })
+    @BPMNGetterVariables( variables = { "codRequest" })
     public void execute(DelegateExecution execution) throws Exception {
         Long codRequest = (Long) execution.getProcessInstance().getVariables().get("codRequest");
         if (codRequest != null) {
