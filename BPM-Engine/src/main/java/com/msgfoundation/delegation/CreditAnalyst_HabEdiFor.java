@@ -1,5 +1,7 @@
 package com.msgfoundation.delegation;
 
+import com.msgfoundation.annotations.BPMNGetterVariables;
+import com.msgfoundation.annotations.BPMNTask;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +22,6 @@ public class CreditAnalyst_HabEdiFor implements JavaDelegate {
     @Value("${spring.datasource.password}")
     private String databasePassword;
     @Override
-    @BPMNGetterVariables(variables = { "codRequest" })
     @BPMNGetterVariables( variables = { "codRequest" })
     public void execute(DelegateExecution delegateExecution) throws Exception {
         Long codRequest = (Long) delegateExecution.getProcessInstance().getVariables().get("codRequest");

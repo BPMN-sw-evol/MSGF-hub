@@ -1,6 +1,9 @@
 package com.msgfoundation.delegation;
 
 
+import com.msgfoundation.annotations.BPMNGetterVariables;
+import com.msgfoundation.annotations.BPMNSetterVariables;
+import com.msgfoundation.annotations.BPMNTask;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +29,6 @@ public class CreditCommittee_ConInfFin implements JavaDelegate {
         return preparedStatement.executeQuery();
     }
 
-    @BPMNSetterVariables(variables = { "coupleSavings", "quotaValue" })
     @BPMNSetterVariables( variables = { "coupleSavings", "quotaValue" })
     public void setterVariables(DelegateExecution execution, ResultSet resultSet) throws SQLException {
         if(resultSet.next()){
@@ -46,7 +48,6 @@ public class CreditCommittee_ConInfFin implements JavaDelegate {
         }
     }
     @Override
-    @BPMNGetterVariables(variables = { "codRequest" })
     @BPMNGetterVariables( variables = { "codRequest" })
     public void execute(DelegateExecution execution) throws Exception {
         Long codRequest = (Long) execution.getProcessInstance().getVariables().get("codRequest");

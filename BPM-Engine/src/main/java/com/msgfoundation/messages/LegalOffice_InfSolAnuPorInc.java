@@ -1,6 +1,7 @@
 package com.msgfoundation.messages;
 
 import com.msgfoundation.annotations.BPMNGetterVariables;
+import com.msgfoundation.annotations.BPMNTask;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,6 @@ public class LegalOffice_InfSolAnuPorInc implements JavaDelegate {
     @Autowired
     private TemplateEngine templateEngine;
     @Override
-    @BPMNGetterVariables(variables = {"coupleName1", "coupleName2", "quotaValue"})
-    @BPMNGetterVariables(variables = { "coupleName1", "coupleName2", "pdfSupport", "workSupport", "coupleEmail2", "coupleEmail1" })
     @BPMNGetterVariables( variables = { "coupleName1", "coupleName2", "pdfSupport", "workSupport", "coupleEmail2", "coupleEmail1" })
     public void execute(DelegateExecution delegateExecution) throws Exception {
 

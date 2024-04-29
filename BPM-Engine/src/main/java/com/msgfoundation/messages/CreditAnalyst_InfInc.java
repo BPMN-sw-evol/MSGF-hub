@@ -1,5 +1,7 @@
 package com.msgfoundation.messages;
 
+import com.msgfoundation.annotations.BPMNGetterVariables;
+import com.msgfoundation.annotations.BPMNTask;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,6 @@ public class CreditAnalyst_InfInc implements JavaDelegate {
     @Autowired
     private TemplateEngine templateEngine;
     @Override
-    @BPMNGetterVariables(variables = { "coupleName1", "coupleName2", "workSupport", "coupleEmail2", "coupleEmail1", "creationDate" })
     @BPMNGetterVariables( variables = { "coupleName1", "coupleName2", "workSupport", "coupleEmail2", "coupleEmail1", "creationDate" })
     public void execute(DelegateExecution delegateExecution) throws Exception {
         // Obtener variables del proceso
