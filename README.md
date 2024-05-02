@@ -87,4 +87,4 @@ To use this program you must:
    * CentralSys works on port 9002.
    * Treasury works on port 9004.
 
-In this [Doc guide](https://docs.google.com/document/d/1DMgXXMgYQpu_NR9twUyS1QT8QMNe5Xy2/edit?usp=sharing&ouid=101566600789219917918&rtpof=true&sd=true) you can find out how to use the MSGF-hub application.  
+In this [doc guide](https://docs.google.com/document/d/1DMgXXMgYQpu_NR9twUyS1QT8QMNe5Xy2/edit?usp=sharing&ouid=101566600789219917918&rtpof=true&sd=true) you can find out how to use the MSGF-hub application.  
