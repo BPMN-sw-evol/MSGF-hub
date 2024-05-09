@@ -5,6 +5,7 @@ import com.msgfoundation.annotations.BPMNTask;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,19 @@ import java.util.Locale;
 @RequiredArgsConstructor
 @BPMNTask(type = "sendTask", name = "Informar desembolso a pareja y a vendedor")
 public class Treasury_InfDesAParYAVen {
+
+    @Value("${spring.datasource.url}")
+    private String databaseUrl;
+    @Value("${spring.datasource.username}")
+    private String databaseUser;
+    @Value("${spring.datasource.password}")
+    private String databasePassword;
+
     private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
     public void updatePayment(Long codRequest) throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
-
+//        Connection connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
+        Connection connection = DriverManager.getConnection(databaseUrl, databaseUser, databasePassword);
         String updateQuery = "UPDATE credit_request SET payment = true WHERE cod_request = ?";
 
         try (PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {

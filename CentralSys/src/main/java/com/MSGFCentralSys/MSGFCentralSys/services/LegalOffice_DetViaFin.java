@@ -8,6 +8,7 @@ import com.msgfoundation.annotations.BPMNGetterVariables;
 import com.msgfoundation.annotations.BPMNSetterVariables;
 import com.msgfoundation.annotations.BPMNTask;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,22 @@ import java.util.*;
 @RequiredArgsConstructor
 @BPMNTask(type = "userTask", name = "Determinar viabilidad financiera")
 public class LegalOffice_DetViaFin {
+
+    @Value("${spring.datasource.url}")
+    private String databaseUrl;
+    @Value("${spring.datasource.username}")
+    private String databaseUser;
+    @Value("${spring.datasource.password}")
+    private String databasePassword;
+    @Value("${API_URL}")
+    private String CAMUNDA_API_URL;
+
     private final RestTemplate restTemplate;
     private List<TaskInfo> tasksList = new ArrayList<>();
 
     public List<String> getAllProcessByActivityId(String activityId) {
-        String url = "http://bpmengine:9000/engine-rest/history/activity-instance?sortBy=startTime&sortOrder=desc&activityId=" + activityId + "&finished=false&unfinished=true&withoutTenantId=false";
+//        String url = "http://bpmengine:9000/engine-rest/history/activity-instance?sortBy=startTime&sortOrder=desc&activityId=" + activityId + "&finished=false&unfinished=true&withoutTenantId=false";
+        String url = CAMUNDA_API_URL + "history/activity-instance?sortBy=startTime&sortOrder=desc&activityId=" + activityId + "&finished=false&unfinished=true&withoutTenantId=false";
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
 
         List<String> processIds = new ArrayList<>();
@@ -53,7 +65,7 @@ public class LegalOffice_DetViaFin {
 
     @BPMNGetterVariables(container = "CreditRequestDTO", variables = {"coupleName1", "coupleName2", "coupleEmail1", "coupleEmail2", "marriageYears", "bothEmployees", "housePrices", "quotaValue", "coupleSavings", "creationDate", "countReviewsBpm"})
     public CreditRequestDTO getProcessVariablesById(String processId) {
-        String CAMUNDA_API_URL = "http://bpmengine:9000/engine-rest/";
+//        String CAMUNDA_API_URL = "http://bpmengine:9000/engine-rest/";
         String camundaURL = CAMUNDA_API_URL + "process-instance/" + processId + "/variables?deserializeValues=true";
 
         ResponseEntity<Map<String, Object>> responseEntity = restTemplate.exchange(
@@ -128,7 +140,8 @@ public class LegalOffice_DetViaFin {
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-        String camundaUrl = "http://bpmengine:9000/engine-rest/task/" + taskId + "/assignee";
+//        String camundaUrl = "http://bpmengine:9000/engine-rest/task/" + taskId + "/assignee";
+        String camundaUrl = CAMUNDA_API_URL + "task/" + taskId + "/assignee";
 
         try {
             ResponseEntity<String> response = restTemplate.exchange(camundaUrl, HttpMethod.POST, requestEntity, String.class);
@@ -141,7 +154,8 @@ public class LegalOffice_DetViaFin {
 
     public TaskInfo getTaskInfoByProcessId(String processId) {
         // Construir la URL para consultar las tareas relacionadas con el proceso
-        String camundaUrl = "http://bpmengine:9000/engine-rest/task?processInstanceId=" + processId;
+//        String camundaUrl = "http://bpmengine:9000/engine-rest/task?processInstanceId=" + processId;
+        String camundaUrl = CAMUNDA_API_URL + "task?processInstanceId=" + processId;
 
         try {
             // Realizar una solicitud GET a Camunda para obtener la lista de tareas
@@ -182,7 +196,8 @@ public class LegalOffice_DetViaFin {
     }
 
     public String getTaskIdByProcessIdWithApi(String processId) {
-        String camundaUrl = "http://bpmengine:9000/engine-rest/task?processInstanceId=" + processId;
+//        String camundaUrl = "http://bpmengine:9000/engine-rest/task?processInstanceId=" + processId;
+        String camundaUrl = CAMUNDA_API_URL + "task?processInstanceId=" + processId;
 
         try {
             ResponseEntity<List<Map>> response = restTemplate.exchange(camundaUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<Map>>() {
@@ -238,7 +253,8 @@ public class LegalOffice_DetViaFin {
             HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
             try {
-                String camundaUrl = "http://bpmengine:9000/engine-rest/task/" + taskId + "/complete";
+//                String camundaUrl = "http://bpmengine:9000/engine-rest/task/" + taskId + "/complete";
+                String camundaUrl = CAMUNDA_API_URL + "task/" + taskId + "/complete";
                 restTemplate.postForEntity(camundaUrl, requestEntity, Map.class);
                 String newTaskId = getTaskIdByProcessIdWithApi(processId);
 
@@ -281,7 +297,8 @@ public class LegalOffice_DetViaFin {
             HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
             try {
-                String camundaUrl = "http://bpmengine:9000/engine-rest/task/" + taskId + "/complete";
+//                String camundaUrl = "http://bpmengine:9000/engine-rest/task/" + taskId + "/complete";
+                String camundaUrl = CAMUNDA_API_URL + "task/" + taskId + "/complete";
                 restTemplate.postForEntity(camundaUrl, requestEntity, Map.class);
                 String newTaskId = getTaskIdByProcessIdWithApi(processId);
 
@@ -307,7 +324,8 @@ public class LegalOffice_DetViaFin {
 
     @BPMNSetterVariables(variables = "countReviewsBpm")
     public void updateReviewAndStatus(String processId, String status) throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
+//        Connection connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
+        Connection connection = DriverManager.getConnection(databaseUrl, databaseUser, databasePassword);
 
         String updateQuery = "UPDATE credit_request SET status = ?, count_reviewcr = count_reviewcr + 1 WHERE process_id = ?";
 
@@ -329,7 +347,8 @@ public class LegalOffice_DetViaFin {
         // Obtener el nuevo valor de countReviewsBpm desde la base de datos
         long countReviewsBpm = getCountReviewsBpmFromDatabase(processId);
 
-        String camundaUrl = "http://bpmengine:9000/engine-rest/process-instance/" + processId + "/variables/countReviewsBpm";
+//        String camundaUrl = "http://bpmengine:9000/engine-rest/process-instance/" + processId + "/variables/countReviewsBpm";
+        String camundaUrl = CAMUNDA_API_URL + "process-instance/" + processId + "/variables/countReviewsBpm";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -368,7 +387,8 @@ public class LegalOffice_DetViaFin {
 
         try {
             // Conectar a la base de datos
-            connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
+//            connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
+            connection = DriverManager.getConnection(databaseUrl, databaseUser, databasePassword);
 
             // Consulta SQL para obtener countReviewsBpm
             String query = "SELECT count_reviewcr FROM credit_request WHERE process_id = ?";

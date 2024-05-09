@@ -13,7 +13,7 @@ services:
 #      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
     ports:
-      - "5432:5432"
+      - "5452:5432"
     volumes:
       - bpm_engine_data:/var/lib/postgresql/data
     healthcheck:
@@ -140,7 +140,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: admin
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
       CAMUNDA.URL: http://bpmengine:9000/engine-rest/
-      SERVER_PORT: 9001
+      SERVER_PORT: 9004
       EMAIL_ADDRESS: securedigitaldocs@gmail.com
       EMAIL_PASSWORD: bsqdckybksteviio
     depends_on:

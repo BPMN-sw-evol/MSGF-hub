@@ -15,12 +15,7 @@ import java.sql.SQLException;
 @Service("activateForm")
 @BPMNTask(type = "serviceTask", name = "Habilitar edición formulario")
 public class CreditAnalyst_HabEdiFor implements JavaDelegate {
-    @Value("${spring.datasource.url}")
-    private String databaseUrl;
-    @Value("${spring.datasource.username}")
-    private String databaseUser;
-    @Value("${spring.datasource.password}")
-    private String databasePassword;
+
     @Override
     @BPMNGetterVariables( variables = { "codRequest" })
     public void execute(DelegateExecution delegateExecution) throws Exception {
@@ -36,6 +31,7 @@ public class CreditAnalyst_HabEdiFor implements JavaDelegate {
 
     private void updateStatusToDraft(Long codRequest) throws SQLException {
         System.out.println("Your credit status has been updated");
+//        Connection connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
         Connection connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
 
         String updateQuery = "UPDATE credit_request SET status = 'DRAFT' WHERE cod_request = ?";
