@@ -42,8 +42,6 @@ The different components shown in the following architecture are hosted here:
 
 The applications created in this implementation were developed using the Java programming language, mainly taking advantage of the Spring Boot development framework as well as the Camunda 7 platform for business process management.
 
-[Java](https://www.java.com/es/) is a versatile and widely used programming language known for its platform independence, robustness, and scalability. With its rich ecosystem of libraries and frameworks, Java enables developers to build complex enterprise-grade applications efficiently and reliably.
-
 [Spring initializr](https://start.spring.io/) is a tool that streamlines the creation of Spring Boot projects by integrating various dependencies such as Spring Data JPA, Spring Web, Lombok, Thymeleaf, and DevTools. Spring Boot improves the development process by providing out-of-the-box solutions for common challenges, allowing developers to focus on business logic rather than infrastructure configuration.
 
 In addition, [Camunda Platform 7](https://camunda.com/platform-7/) has been used for the design and implementation of business processes. Camunda is an open source workflow and decision automation platform based on the BPMN (Business Process Model and Notation) and DMN (Decision Model and Notation) standards. It offers powerful workflow management capabilities, allowing organizations to effectively model, automate and optimize business processes. Camunda's flexible and scalable architecture makes it suitable for a wide range of use cases, from automating simple tasks to complex enterprise workflows.
@@ -59,6 +57,12 @@ To use this program you need the following:
 3. **Docker and Docker-Compose**: To use Docker correctly follow the steps below:
    - Step 1: Install Docker from the official website.(If you already have Docker Desktop installed, skip this step).
    - Step 2: Create a Docker Hub account from the official website, and log in to Docker Desktop. (If you already have an account, log in directly to Docker Desktop) WSL2: According to your need: Use the following command to install WSL2 wsl --list --o to know the available distributions. wsl --install -d "distribution-version" to install WSL2 with a specific distribution. Use the following command for upgrade to WSL2 wsl --version if you want to know the installed WSL version wsl --set-default-version 2 to change the version to WSL2.
+
+4. **Java**: Install Jaca from the [official website](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html).
+   - Step 1: Download MSI installer version.
+     
+5. **Maven**: Install Apache Maven from the [official website](https://maven.apache.org/download.cgi).
+   - Step 1: Add the **bin** folder path to the environment variables.
 
 ## Usage
 
