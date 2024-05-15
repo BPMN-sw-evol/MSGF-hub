@@ -19,7 +19,7 @@ This development was carried out with two objectives:
 
 * Obtain the set of software artifacts that make up a business process-based information system, using Camunda as the process engine (in its community 7 version).  
 
-* Use this information system to apply a traceability framework that facilitates its evolution. This framework is based on Java annotations, whose definitions can be found at [GitHub Repository](https://github.com/BPMN-sw-evol/Annotations).
+* Use this information system to apply a traceability framework that facilitates its evolution. This framework is based on Java annotations, whose definitions can be found at this [Annotations definitions GitHub Repository](https://github.com/BPMN-sw-evol/Annotations).
 
 The different components shown in the following architecture are hosted here:
 
