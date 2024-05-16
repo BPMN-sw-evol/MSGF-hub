@@ -48,7 +48,7 @@ In addition, [Camunda Platform 7](https://camunda.com/platform-7/) has been used
 
 ## Installation requirements
 
-To use this program you need the following:
+To use the set of applications that compose the MSGF information system you need the following:
 
 1. **Version control system**: Install GIT from the [GIT official website](https://git-scm.com/downloads).
 
@@ -58,10 +58,10 @@ To use this program you need the following:
    - Step 1: Install Docker from the official website.(If you already have Docker Desktop installed, skip this step).
    - Step 2: Create a Docker Hub account from the official website, and log in to Docker Desktop. (If you already have an account, log in directly to Docker Desktop) WSL2: According to your need: Use the following command to install WSL2 wsl --list --o to know the available distributions. wsl --install -d "distribution-version" to install WSL2 with a specific distribution. Use the following command for upgrade to WSL2 wsl --version if you want to know the installed WSL version wsl --set-default-version 2 to change the version to WSL2.
 
-4. **Java**: Install Jaca from the [official website](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html).
+5. **Java**: Install Java from the [official website](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html).
    - Step 1: Download MSI installer version.
      
-5. **Maven**: Install Apache Maven from the [official website](https://maven.apache.org/download.cgi).
+6. **Maven**: Install Apache Maven from the [official website](https://maven.apache.org/download.cgi).
    - Step 1: Add the **bin** folder path to the environment variables.
 
 ## Usage
