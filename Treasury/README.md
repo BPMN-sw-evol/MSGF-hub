@@ -29,6 +29,7 @@ To use this program you need the following:
 
 5. **PostgreSQL with PgAdmin**: you can download to install PostgreSQL and pgAdmin for the database manage [official website](https://www.postgresql.org/download/)
 6. **Email Sender Configuration**: To send email notifications to people who request credits.
+
 ## Usage
 
 To use this program in your local machine you must:

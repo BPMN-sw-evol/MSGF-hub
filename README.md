@@ -21,7 +21,7 @@ This development was carried out with two objectives:
 
 * Use this information system to apply a traceability framework that facilitates its evolution. This framework is based on Java annotations, whose definitions can be found at this [Annotations definitions GitHub Repository](https://github.com/BPMN-sw-evol/Annotations).
 
-The different components shown in the following architecture are hosted here:
+This mono repository contains the various modules shown in the following architecture:
 
 ![ArchitecturaDiagram](docs/MSGF-Architecture.png)
 
@@ -55,8 +55,14 @@ To use the set of applications that compose the MSGF information system you need
 2. **IntelliJ IDEA**: To run and/or modify the project, you can download it from the [IntelliJ official website](https://www.jetbrains.com/es-es/idea/download/?section=windows).
 
 3. **Docker and Docker-Compose**: To use Docker correctly follow the steps below:
-   - Step 1: Install Docker from the official website.(If you already have Docker Desktop installed, skip this step).
-   - Step 2: Create a Docker Hub account from the official website, and log in to Docker Desktop. (If you already have an account, log in directly to Docker Desktop) WSL2: According to your need: Use the following command to install WSL2 wsl --list --o to know the available distributions. wsl --install -d "distribution-version" to install WSL2 with a specific distribution. Use the following command for upgrade to WSL2 wsl --version if you want to know the installed WSL version wsl --set-default-version 2 to change the version to WSL2.
+   - Step 1: According to your need Use the following command to install WSL2 
+     - ```wsl --list --o``` to know the available distributions. 
+     - ```wsl --install -d "distribution-version"``` to install WSL2 with a specific distribution. 
+     - Use the following command for upgrade to WSL2 ```wsl --version```
+     - If you want to know the installed WSL version ```wsl --set-default-version 2``` to change the version to WSL2.
+   - Step 2: Install Docker from the official website.(If you already have Docker Desktop installed, skip this step).
+   - Step 3: Create a Docker Hub account from the official website, and log in to Docker Desktop. (If you already have an account, log in directly to Docker Desktop)
+   
 
 5. **Java**: Install Java from the [official website](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html).
    - Step 1: Download MSI installer version.
@@ -73,7 +79,7 @@ To use this program you must:
 2. Open a terminal in the folder where you want to download the program and clone it with:
 
    ```
-   git clone https://github.com/BPMN-sw-evol/trace-hub.git
+   git clone https://github.com/BPMN-sw-evol/MSGF-hub.git
    ```
 
 3. You should run the build-and-run.sh file as follows (if you are on a Windows operating system use Git Bash):
@@ -88,7 +94,7 @@ To use this program you must:
 
    * BPM-Engine works on port 9000.
    * CreditRequest works on port 9001.
-   * CentralSys works on port 9002.
+   * CentralSys works on port 9003.
    * Treasury works on port 9004.
 
 In this [doc guide](https://docs.google.com/document/d/1DMgXXMgYQpu_NR9twUyS1QT8QMNe5Xy2/edit?usp=sharing&ouid=101566600789219917918&rtpof=true&sd=true) you can find out how to use the MSGF-hub application.  
