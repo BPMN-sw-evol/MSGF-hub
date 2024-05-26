@@ -6,7 +6,7 @@
 
 tasks:
   - init: |
-      sdk default java 17.0.10.fx-zulu 
+      sdk install java 17.0.10.fx-zulu < /dev/null
       mvn install -DskipTests=false
 
 
