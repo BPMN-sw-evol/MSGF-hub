@@ -7,18 +7,24 @@ import com.msgfoundation.annotations.BPMNTask;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.sql.*;
 
+@Service
 @BPMNTask(type = "serviceTask", name = "Consultar información financiera")
 public class CreditCommittee_ConInfFin implements JavaDelegate {
 
-
-
+    @Value("${CONNECTION_CREDIT_REQUEST}")
+    private String connectionDB;
+    @Value("${USER_DB}")
+    private String userDB;
+    @Value("${PASSWORD_DB}")
+    private String passwordDB;
 
     public ResultSet getterVariables(Long codRequest) throws SQLException{
-//        Connection connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
+
+        Connection connection = DriverManager.getConnection(connectionDB, userDB, passwordDB);
 
         String query = "SELECT couple_savings, house_prices, quota_value FROM credit_request WHERE cod_request = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -27,21 +33,16 @@ public class CreditCommittee_ConInfFin implements JavaDelegate {
         return preparedStatement.executeQuery();
     }
 
-    @BPMNSetterVariables( variables = { "coupleSavings", "quotaValue" })
+    @BPMNSetterVariables( variables = { "housePrices", "coupleSavings", "quotaValue" })
     public void setterVariables(DelegateExecution execution, ResultSet resultSet) throws SQLException {
         if(resultSet.next()){
             long coupleSavings = resultSet.getLong("couple_savings");
-            long housesPrices = resultSet.getLong("house_prices");
+            long housePrices = resultSet.getLong("house_prices");
             long quotaValue = resultSet.getLong("quota_value");
-
-            System.out.println("variables obtenidas: ");
-            System.out.println("Couple Savings: " + coupleSavings);
-            System.out.println("Houses Prices: " + housesPrices);
-            System.out.println("Quota Value: " + quotaValue);
 
             // Aquí asignamos los valores a las variables de salida definidas en el BPMN
             execution.setVariable("coupleSavingsOutput", coupleSavings);
-            execution.setVariable("housePricesOutput", housesPrices);
+            execution.setVariable("housePricesOutput", housePrices);
             execution.setVariable("quotaValueOutput", quotaValue);
         }
     }

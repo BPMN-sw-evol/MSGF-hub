@@ -23,7 +23,7 @@ public class CreditCommittee_InfRecDeSol implements JavaDelegate {
     @Autowired
     private TemplateEngine templateEngine;
     @Override
-    @BPMNGetterVariables( variables = { "coupleName1", "coupleName2", "coupleEmail2", "coupleEmail1" })
+    @BPMNGetterVariables( variables = { "coupleName1", "coupleName2", "coupleEmail2", "coupleEmail1", "housePrices", "coupleSavings", "quotaValue" })
     public void execute(DelegateExecution delegateExecution) throws Exception {
         // Obtener variables del proceso
         String processID = (String) delegateExecution.getProcessInstanceId();

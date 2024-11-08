@@ -45,9 +45,7 @@ public class MarriedCouple_DilForDeSol implements MarriedCoupleService {
 
     private List<TaskInfo> tasksList = new ArrayList<>();
 
-//    @BPMNSetterVariables(container = "creditInfoDTO", variables = {"codRequest", "marriageYears", "bothEmployees", "applicantCouple",
-//            "coupleName1", "coupleName2", "coupleEmail1", "coupleEmail2", "creationDate", "countReviewsBpm"})
-    @BPMNSetterVariables(container = "CreditInfoDTO.java", variables = { "coupleName1", "coupleName2", "pdfSupport", "countReviewsBpm", "coupleEmail2", "coupleEmail1", "applicantCouple", "creationDate", "marriageYears", "bothEmployees", "workSupport", "codRequest" })
+    @BPMNSetterVariables(container = "CreditInfoDTO", variables = { "coupleName1", "coupleName2", "pdfSupport", "countReviewsBpm", "coupleEmail2", "coupleEmail1", "applicantCouple", "creationDate", "marriageYears", "bothEmployees", "housePrices","coupleSavings","quotaValue", "workSupport", "codRequest" })
     public String startProcessInstance(CreditInfoDTO creditInfoDTO) {
 
         HttpHeaders headers = new HttpHeaders();
@@ -79,7 +77,6 @@ public class MarriedCouple_DilForDeSol implements MarriedCoupleService {
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
         try {
-//            ResponseEntity<Map> response = restTemplate.postForEntity("http://bpmengine:9000/engine-rest/"+"process-definition/key/MSGF-CreditRequest/start", requestEntity, Map.class);
             ResponseEntity<Map> response = restTemplate.postForEntity(camundaUrl +"process-definition/key/MSGF-CreditRequest/start", requestEntity, Map.class);
             String processId = String.valueOf(response.getBody().get("id"));
             TaskInfo taskInfo = getTaskInfoByProcessIdWithApi(processId);
@@ -124,11 +121,6 @@ public class MarriedCouple_DilForDeSol implements MarriedCoupleService {
                 taskInfoMap.put("taskId", String.valueOf(tasks.get(0).get("id")));
                 taskInfoMap.put("taskName", String.valueOf(tasks.get(0).get("name")));
                 taskInfoMap.put("assignee", String.valueOf(tasks.get(0).get("assignee")));
-
-                System.out.println("Task Info for Process ID " + processId + ":");
-                System.out.println("Task ID: " + taskInfoMap.get("taskId"));
-                System.out.println("Task Name: " + taskInfoMap.get("taskName"));
-                System.out.println("Assignee: " + taskInfoMap.get("assignee"));
 
                 TaskInfo taskInfo = new TaskInfo();
                 taskInfo.setProcessId(processId);
@@ -175,7 +167,7 @@ public class MarriedCouple_DilForDeSol implements MarriedCoupleService {
         }
     }
 
-    @BPMNSetterVariables( variables = { "coupleName1", "coupleName2", "pdfSupport", "coupleEmail2", "coupleEmail1", "creationDate", "applicantCouple", "marriageYears", "bothEmployees", "workSupport", "codRequest" })
+    @BPMNSetterVariables( variables = { "coupleName1", "coupleName2", "pdfSupport", "coupleEmail2", "coupleEmail1", "creationDate", "applicantCouple", "marriageYears", "bothEmployees", "housePrices","coupleSavings","quotaValue", "workSupport", "codRequest" })
     public String updateProcessVariables(String processId, CreditRequest creditRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -293,10 +285,6 @@ public class MarriedCouple_DilForDeSol implements MarriedCoupleService {
     }
 
     public void updateReviewAndStatus(String processId, String status) throws SQLException {
-        System.out.println("database url: "+databaseUrl);
-        System.out.println("database user: "+databaseUser);
-        System.out.println("database passwprd: "+databasePassword);
-//        Connection connection = DriverManager.getConnection("jdbc:postgresql://credit_request_db:5432/credit_request", "postgres", "admin");
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUser, databasePassword);
 
 

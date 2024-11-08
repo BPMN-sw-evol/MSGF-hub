@@ -23,7 +23,7 @@ public class LegalOffice_InfConJurNoVia implements JavaDelegate {
     @Autowired
     private TemplateEngine templateEngine;
     @Override
-    @BPMNGetterVariables( variables = { "coupleName1", "coupleName2", "coupleEmail2", "coupleEmail1" })
+    @BPMNGetterVariables( variables = { "coupleName1", "coupleName2", "coupleEmail2", "coupleEmail1", "bothEmployees", "pdfSupport" })
     public void execute(DelegateExecution delegateExecution) throws Exception {
         // Obtener variables del proceso
         String processID = delegateExecution.getProcessInstanceId();

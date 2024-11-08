@@ -41,10 +41,10 @@
         <bpmn:flowNodeRef>Activity_0hyf97s</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1wiovwo</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0ix3pe0</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0fra7nj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_0cgomcg</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0w6u5nd</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_06o7665</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0fra7nj</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:sequenceFlow id="Flow_0pj7crd" sourceRef="Gateway_0w6u5nd" targetRef="Event_06o7665" />
@@ -168,7 +168,7 @@
               </camunda:map>
             </camunda:inputParameter>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
-            <camunda:inputParameter name="url">http://treasury:9004/payment/update/${codRequest}</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://localhost:9004/payment/update/${codRequest}</camunda:inputParameter>
           </camunda:inputOutput>
           <camunda:connectorId>http-connector</camunda:connectorId>
         </camunda:connector>
@@ -176,42 +176,6 @@
       <bpmn:incoming>Flow_0lestyq</bpmn:incoming>
       <bpmn:outgoing>Flow_135uu2z</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sendTask id="Activity_0fra7nj" name="Informar desembolso a pareja y a vendedor">
-      <bpmn:extensionElements>
-        <camunda:connector>
-          <camunda:inputOutput>
-            <camunda:inputParameter name="headers">
-              <camunda:map>
-                <camunda:entry key="Content-Type">application/json</camunda:entry>
-              </camunda:map>
-            </camunda:inputParameter>
-            <camunda:inputParameter name="method">POST</camunda:inputParameter>
-            <camunda:inputParameter name="url">http://treasury:9004/payment/message</camunda:inputParameter>
-            <camunda:inputParameter name="payload">{
-"processId": "${execution.processInstanceId}",
-"date": "${now()}",
-"coupleName1": "${coupleName1}",
-"coupleName2": "${coupleName2}",
-"coupleEmail1": "${coupleEmail1}",
-"coupleEmail2": "${coupleEmail2}",
-"housePrices": ${housePrices},
-"quotaValue": ${quotaValue}
-}</camunda:inputParameter>
-          </camunda:inputOutput>
-          <camunda:connectorId>http-connector</camunda:connectorId>
-        </camunda:connector>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="coupleName1">${coupleName1}</camunda:inputParameter>
-          <camunda:inputParameter name="coupleEmail1">${coupleEmail1}</camunda:inputParameter>
-          <camunda:inputParameter name="coupleName2">${coupleName2}</camunda:inputParameter>
-          <camunda:inputParameter name="coupleEmail2">${coupleEmail2}</camunda:inputParameter>
-          <camunda:inputParameter name="housePrices">${housePrices}</camunda:inputParameter>
-          <camunda:inputParameter name="quotaValue">${quotaValue}</camunda:inputParameter>
-        </camunda:inputOutput>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0wnt3k2</bpmn:incoming>
-      <bpmn:outgoing>Flow_05m3bws</bpmn:outgoing>
-    </bpmn:sendTask>
     <bpmn:serviceTask id="Activity_0ix3pe0" name="Calcular cuota de manejo" camunda:expression="${1*2}" camunda:resultVariable="value1">
       <bpmn:incoming>Flow_09cru3p</bpmn:incoming>
       <bpmn:outgoing>Flow_1t6qlnb</bpmn:outgoing>
@@ -380,6 +344,42 @@
       <bpmn:incoming>Flow_14z68dw</bpmn:incoming>
       <bpmn:outgoing>Flow_1xeevjq</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:sendTask id="Activity_0fra7nj" name="Informar desembolso a pareja y a vendedor">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://localhost:9004/payment/message</camunda:inputParameter>
+            <camunda:inputParameter name="payload">{
+"processId": "${execution.processInstanceId}",
+"date": "${now()}",
+"coupleName1": "${coupleName1}",
+"coupleName2": "${coupleName2}",
+"coupleEmail1": "${coupleEmail1}",
+"coupleEmail2": "${coupleEmail2}",
+"housePrices": ${housePrices},
+"quotaValue": ${quotaValue}
+}</camunda:inputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="coupleName1">${coupleName1}</camunda:inputParameter>
+          <camunda:inputParameter name="coupleEmail1">${coupleEmail1}</camunda:inputParameter>
+          <camunda:inputParameter name="coupleName2">${coupleName2}</camunda:inputParameter>
+          <camunda:inputParameter name="coupleEmail2">${coupleEmail2}</camunda:inputParameter>
+          <camunda:inputParameter name="housePrices">${housePrices}</camunda:inputParameter>
+          <camunda:inputParameter name="quotaValue">${quotaValue}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0wnt3k2</bpmn:incoming>
+      <bpmn:outgoing>Flow_05m3bws</bpmn:outgoing>
+    </bpmn:sendTask>
   </bpmn:process>
   <bpmn:message id="Message_3t29gv6" name="la solicitud tiene inconsistencias" />
   <bpmn:message id="Message_131shod" name="hayIncosistencias" />
@@ -443,10 +443,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0j969um_di" bpmnElement="Activity_0cgomcg">
         <dc:Bounds x="1940" y="1425" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1a3trwp_di" bpmnElement="Activity_0fra7nj">
-        <dc:Bounds x="1940" y="1295" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0lz42fg_di" bpmnElement="Activity_0ix3pe0">
@@ -549,6 +545,10 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ixmver_di" bpmnElement="Activity_1emma31">
         <dc:Bounds x="580" y="175" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1a3trwp_di" bpmnElement="Activity_0fra7nj">
+        <dc:Bounds x="1940" y="1295" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0pj7crd_di" bpmnElement="Flow_0pj7crd">
