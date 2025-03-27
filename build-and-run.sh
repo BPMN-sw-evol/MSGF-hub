@@ -12,6 +12,11 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Paso 2-: Ejecutar el creador de base de datos
+echo "Ejecutando database..."
+java -jar database/target/database-1.0-SNAPSHOT.jar &
+PID_DATABASE=$!
+
 # Paso 2: Ejecutar BPM-Engine
 echo "Ejecutando BPM-Engine..."
 java -jar BPM-Engine/target/BPM-Engine-1.0-SNAPSHOT.jar &
@@ -33,6 +38,7 @@ java -jar Treasury/target/Treasury-1.0-SNAPSHOT.jar &
 PID_TREASURY=$!
 
 # Paso 6: Esperar a que ambos servicios terminen
+wait $PID_DATABASE
 wait $PID_BPM_ENGINE
 wait $PID_CENTRAL_SYS
 wait $PID_CREDIT_REQUEST
