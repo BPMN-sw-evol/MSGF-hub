@@ -52,13 +52,18 @@ public class DatabaseInitializer {
             }
             
             if (!dbExists) {
-                System.out.println("Creando base de datos: " + dbName);
-                JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource); // Usamos el DataSource directamente
-                jdbcTemplate.execute("CREATE DATABASE " + dbName);
-                System.out.println("Base de datos creada exitosamente: " + dbName);
+                try {
+                    System.out.println("Creando base de datos: " + dbName);
+                    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource); // Usamos el DataSource directamente
+                    jdbcTemplate.execute("CREATE DATABASE " + dbName);
+                    System.out.println("Base de datos creada exitosamente: " + dbName);
+                } catch (Exception e) {
+                    System.out.println("Base de datos ya existe: " + dbName);
+                }
             } else {
                 System.out.println("Base de datos ya existe: " + dbName);
             }
+            
         }
     }
 }

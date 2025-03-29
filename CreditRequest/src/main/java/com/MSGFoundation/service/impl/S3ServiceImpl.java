@@ -20,7 +20,7 @@ public class S3ServiceImpl implements S3Service {
     public String uploadFile(MultipartFile file, String filename) throws IOException {
         try {
             PutObjectRequest putObjectAclRequest = PutObjectRequest.builder()
-                    .bucket("bucket-msgfoundation")
+                    .bucket("msgfoundation")
                     .key(filename)
                     .build();
 
@@ -37,7 +37,7 @@ public class S3ServiceImpl implements S3Service {
             return "File has not exists";
         }
         GetObjectRequest request = GetObjectRequest.builder()
-                .bucket("bucket-msgfoundation")
+                .bucket("msgfoundation")
                 .key(fileName)
                 .build();
         ResponseInputStream<GetObjectResponse> result = s3Client.getObject(request);
@@ -58,7 +58,7 @@ public class S3ServiceImpl implements S3Service {
     public boolean doesObjectExists(String objectKey) {
         try {
             HeadObjectRequest headObjectRequest = HeadObjectRequest.builder()
-                    .bucket("bucket-msgfoundation")
+                    .bucket("msgfoundation")
                     .key(objectKey)
                     .build();
             s3Client.headObject(headObjectRequest);
@@ -77,7 +77,7 @@ public class S3ServiceImpl implements S3Service {
         }
         try {
             DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
-                    .bucket("bucket-msgfoundation")
+                    .bucket("msgfoundation")
                     .key(filename)
                     .build();
             s3Client.deleteObject(deleteObjectRequest);
@@ -94,7 +94,7 @@ public class S3ServiceImpl implements S3Service {
 
         try {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                    .bucket("bucket-msgfoundation")
+                    .bucket("msgfoundation")
                     .key(filename)
                     .build();
 
