@@ -19,7 +19,7 @@ This development was carried out with two objectives:
 
 * Obtain the set of software artifacts that make up a business process-based information system, using Camunda as the process engine (in its community 7 version).  
 
-* Use this information system to apply a traceability framework that facilitates its evolution. This framework is based on Java annotations, whose definitions can be found at this [Annotations definitions GitHub Repository](https://github.com/BPMN-sw-evol/Annotations).
+* Use this information system to apply a traceability framework that facilitates its evolution. This framework is based on Java annotations, whose definitions can be found at this [Annotations definitions GitHub Repository](https://github.com/BPMN-sw-evol/MSGF-hub/tree/main/annotations).
 
 This mono repository contains the various modules shown in the following architecture:
 
@@ -28,15 +28,15 @@ This mono repository contains the various modules shown in the following archite
 
 ## Applications
 
-1. **BPM-Engine**: program that integrates the Camunda process engine in its version 7 in a Spring Boot project persisting the whole schema to a PostgreSQL database. [Repository Link](https://github.com/BPMN-sw-evol/MSGF-BPM-Engine)
+1. **BPM-Engine**: program that integrates the Camunda process engine in its version 7 in a Spring Boot project persisting the whole schema to a PostgreSQL database. [Repository Link](https://github.com/BPMN-sw-evol/MSGF-hub/tree/main/BPM-Engine)
 
-2. **CreditRequest**: program that manages all credit requests from customers. There you can create a new request and follow up on it. [Repository Link](https://github.com/BPMN-sw-evol/MSGF-CreditRequest)
+2. **CreditRequest**: program that manages all credit requests from customers. There you can create a new request and follow up on it. [Repository Link](https://github.com/BPMN-sw-evol/MSGF-hub/tree/main/CreditRequest)
 
-3. **CentralSys**: program that manages all credit requests from customers at the organization level. This is where the organization's employees follow up on their assigned tasks. [Repository Link](https://github.com/BPMN-sw-evol/MSGF-CentralSys)
+3. **CentralSys**: program that manages all credit requests from customers at the organization level. This is where the organization's employees follow up on their assigned tasks. [Repository Link](https://github.com/BPMN-sw-evol/MSGF-hub/tree/main/CentralSys)
 
-4. **Treasury**: program that manages the financial movements when a credit request is approved by the treasury office. [Repository Link](https://github.com/BPMN-sw-evol/MSGF-Treasury)
+4. **Treasury**: program that manages the financial movements when a credit request is approved by the treasury office. [Repository Link](https://github.com/BPMN-sw-evol/MSGF-hub/tree/main/Treasury)
 
-5. **annotations**: as part of the business process variable traceability project, some customized annotations were implemented in order to identify how these variables are traced in the source code. Here is the definition of the annotations using a Java project. [Repository Link](https://github.com/BPMN-sw-evol/Annotations)
+5. **annotations**: as part of the business process variable traceability project, some customized annotations were implemented in order to identify how these variables are traced in the source code. Here is the definition of the annotations using a Java project. [Repository Link](https://github.com/BPMN-sw-evol/MSGF-hub/tree/main/annotations)
 
 ## Technologies
 
