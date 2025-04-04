@@ -13,8 +13,8 @@ if [ $? -ne 0 ]; then
 fi
 
 # Paso 2-: Ejecutar el creador de base de datos
-echo "Ejecutando database..."
-java -jar database/target/database-1.0-SNAPSHOT.jar &
+echo "Ejecutando db_Initializer..."
+java -jar db_Initializer/target/db_Initializer-1.0-SNAPSHOT.jar &
 PID_DATABASE=$!
 
 # Paso 2: Ejecutar BPM-Engine

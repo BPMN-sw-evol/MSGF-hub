@@ -15,7 +15,7 @@
         <module>CreditRequest</module>
         <module>CentralSys</module>
         <module>Treasury</module>
-        <module>database</module>
+        <module>db_Initializer</module>
     </modules>
 
     <properties>
