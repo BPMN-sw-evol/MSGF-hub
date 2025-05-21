@@ -70,6 +70,11 @@ To use the set of applications that compose the MSGF information system you need
 6. **Maven**: Install Apache Maven from the [official website](https://maven.apache.org/download.cgi).
    - Step 1: Add the **bin** folder path to the environment variables.
 
+7. **PostgreSQL** Install PostgresSQL from the [official website](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads).
+   - Step 1: Download the version for your operating system.
+   - Step 2: In the installation process, leave the default port 5432.
+   - Step 3: The username must be "postgres" and the password must be "admin".
+
 ## Usage
 
 To use this program you must:
