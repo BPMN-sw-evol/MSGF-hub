@@ -33,7 +33,8 @@ public class CreditCommittee_ConInfFin implements JavaDelegate {
         return preparedStatement.executeQuery();
     }
 
-    @BPMNSetterVariables( variables = { "housePrices", "coupleSavings", "quotaValue" })
+
+    @BPMNSetterVariables( variables = { "coupleSavings", "housePrices", "quotaValue" })
     public void setterVariables(DelegateExecution execution, ResultSet resultSet) throws SQLException {
         if(resultSet.next()){
             long coupleSavings = resultSet.getLong("couple_savings");

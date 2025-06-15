@@ -45,7 +45,7 @@ public class MarriedCouple_DilForDeSol implements MarriedCoupleService {
 
     private List<TaskInfo> tasksList = new ArrayList<>();
 
-    @BPMNSetterVariables(container = "CreditInfoDTO", variables = { "coupleName1", "coupleName2", "pdfSupport", "countReviewsBpm", "coupleEmail2", "coupleEmail1", "applicantCouple", "creationDate", "marriageYears", "bothEmployees", "housePrices","coupleSavings","quotaValue", "workSupport", "codRequest" })
+    @BPMNSetterVariables(container = "CreditInfoDTO", variables = { "coupleName1", "coupleName2", "pdfSupport", "countReviewsBpm", "coupleEmail2", "coupleEmail1", "applicantCouple", "creationDate", "marriageYears", "bothEmployees", "workSupport", "codRequest" })
     public String startProcessInstance(CreditInfoDTO creditInfoDTO) {
 
         HttpHeaders headers = new HttpHeaders();
@@ -167,7 +167,7 @@ public class MarriedCouple_DilForDeSol implements MarriedCoupleService {
         }
     }
 
-    @BPMNSetterVariables( variables = { "coupleName1", "coupleName2", "pdfSupport", "coupleEmail2", "coupleEmail1", "creationDate", "applicantCouple", "marriageYears", "bothEmployees", "housePrices","coupleSavings","quotaValue", "workSupport", "codRequest" })
+    @BPMNSetterVariables( variables = { "coupleName1", "coupleName2", "pdfSupport", "coupleEmail2", "coupleEmail1", "creationDate", "applicantCouple", "marriageYears", "bothEmployees", "workSupport", "codRequest" })
     public String updateProcessVariables(String processId, CreditRequest creditRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

@@ -73,7 +73,9 @@ To use the set of applications that compose the MSGF information system you need
 7. **PostgreSQL** Install PostgresSQL from the [official website](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads).
    - Step 1: Download the version for your operating system.
    - Step 2: In the installation process, leave the default port 5432.
+      ![PostgreSQL PORT](docs/Port.png)
    - Step 3: The username must be "postgres" and the password must be "admin".
+      ![Username and Password](docs/User.png)
 
 ## Usage
 

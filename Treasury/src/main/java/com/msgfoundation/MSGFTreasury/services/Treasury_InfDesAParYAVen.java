@@ -1,6 +1,7 @@
 package com.msgfoundation.MSGFTreasury.services;
 
 import com.msgfoundation.MSGFTreasury.model.Payment;
+import com.msgfoundation.annotations.BPMNSetterVariables;
 import com.msgfoundation.annotations.BPMNTask;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -44,6 +45,7 @@ public class Treasury_InfDesAParYAVen {
 
     }
 
+    @BPMNSetterVariables( variables = { "coupleName1", "coupleName2", "coupleEmail1", "coupleEmail2", "housePrices", "quotaValue" })
     public void sendPaymentNotification(Payment payment){
         String subject = "Informe de Desembolso Realizado";
         String templateName = "InformeDesembolso";
