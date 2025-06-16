@@ -1,8 +1,8 @@
 #  MSGF-hub
 
-This is the monorepository that contains an example of a Business Process based System, the MSG Foundation case from the book "Object-Oriented and Classical Software Engineering" (Stephen R. Schach. 2010).
+This is the monorepository that contains an example of a Business Process based System, the MSG Foundation study case from the book "Object-Oriented and Classical Software Engineering" (Stephen R. Schach. 2010).
 
-The MSG Foundation grants mortgage credits to young couples for the purchase of their house, so the system implements the application for these credit requests. The foundation's name refers to the acronym of its founder and philanthropist Martha Stockton Greengage.
+The MSG Foundation grants mortgage credits to young couples for the purchase of their house, so this business process-based software implements the credit requests process. The foundation's name refers to the acronym of its founder and philanthropist Martha Stockton Greengage.
 
 ## Index
 
