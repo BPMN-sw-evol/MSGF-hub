@@ -16,11 +16,12 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class S3ServiceImpl implements S3Service {
     private final S3Client s3Client;
+    private final String bucketName = "msgf-documents";
 
     public String uploadFile(MultipartFile file, String filename) throws IOException {
         try {
             PutObjectRequest putObjectAclRequest = PutObjectRequest.builder()
-                    .bucket("msgfoundation")
+                    .bucket("msgf-documents")
                     .key(filename)
                     .build();
 
@@ -37,7 +38,7 @@ public class S3ServiceImpl implements S3Service {
             return "File has not exists";
         }
         GetObjectRequest request = GetObjectRequest.builder()
-                .bucket("msgfoundation")
+                .bucket(bucketName)
                 .key(fileName)
                 .build();
         ResponseInputStream<GetObjectResponse> result = s3Client.getObject(request);
@@ -58,7 +59,7 @@ public class S3ServiceImpl implements S3Service {
     public boolean doesObjectExists(String objectKey) {
         try {
             HeadObjectRequest headObjectRequest = HeadObjectRequest.builder()
-                    .bucket("msgfoundation")
+                    .bucket(bucketName)
                     .key(objectKey)
                     .build();
             s3Client.headObject(headObjectRequest);
@@ -77,7 +78,7 @@ public class S3ServiceImpl implements S3Service {
         }
         try {
             DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
-                    .bucket("msgfoundation")
+                    .bucket(bucketName)
                     .key(filename)
                     .build();
             s3Client.deleteObject(deleteObjectRequest);
@@ -94,7 +95,7 @@ public class S3ServiceImpl implements S3Service {
 
         try {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                    .bucket("msgfoundation")
+                    .bucket(bucketName)
                     .key(filename)
                     .build();
 
