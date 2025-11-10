@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head th:replace="layout/layout :: head">
+    <meta charset="UTF-8">
+    <title>Error al registrar pareja</title>
+</head>
+<body>
+
+<section class="dinamico">
+    <div class="h-100 d-flex align-items-center justify-content-center" layout:fragment="views">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <div class="text-center mt-4">
+                            <h1 class="display-1 text-danger">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </h1>
+                            <h2 class="fw-bold mb-3">Error al registrar pareja</h2>
+                            <p class="lead" th:text="${error != null ? error : 'Ocurrió un error al registrar la pareja.'}">
+                                Ocurrió un error al registrar la pareja.
+                            </p>
+                            <a class="btn btn-primary mt-3" th:href="@{/register-credit}">
+                                <i class="fas fa-arrow-left me-1"></i>
+                                Volver al formulario
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</section>
+
+</body>
+</html>

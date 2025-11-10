@@ -9,6 +9,7 @@ import com.MSGFoundation.service.impl.*;
 import com.MSGFoundation.util.RequestStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -53,13 +54,17 @@ public class CreditRequestController {
         Person partner1 = people.get(0);
         Person partner2 = people.get(1);
 
+        try {
         personService.createPerson(partner1);
         personService.createPerson(partner2);
         CoupleDTO coupleDTO = new CoupleDTO();
         coupleDTO.setPartner1Id(partner1.getId());
         coupleDTO.setPartner2Id(partner2.getId());
         coupleService.createCouple(coupleDTO);
-
+        } catch (IllegalArgumentException ex) {
+            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+            return new RedirectView("/error-couple");
+        }
 
         CreditRequest creditRequest = new CreditRequest();
         creditRequest.setMarriageYears(creditInfoDTO.getMarriageYears());
@@ -109,7 +114,6 @@ public class CreditRequestController {
 
         return new RedirectView("/view-credit");
     }
-
 
     @PostMapping("/update")
     public RedirectView updateCreditRequest(@ModelAttribute("creditInfoDTO") CreditInfoDTO creditInfoDTO){

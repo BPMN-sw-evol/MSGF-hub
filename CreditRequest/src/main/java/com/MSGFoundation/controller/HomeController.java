@@ -66,4 +66,10 @@ public class HomeController {
 
         return "views/listCredit";
     }
+
+    @GetMapping("/error-couple")
+    public String showCoupleError(Model model) {
+        model.addAttribute("message", "No puedes registrar una pareja con el mismo ID.");
+        return "/error-couple";
+    }
 }
