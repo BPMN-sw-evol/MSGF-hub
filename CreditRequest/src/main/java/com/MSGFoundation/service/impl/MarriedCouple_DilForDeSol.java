@@ -112,8 +112,10 @@ public class MarriedCouple_DilForDeSol implements MarriedCoupleService {
     public TaskInfo getTaskInfoByProcessId(String processId) {
 
         try {
-            ResponseEntity<List<Map>> response = restTemplate.exchange(camundaUrl+"/task?task?processInstanceId="+processId, HttpMethod.GET, null, new ParameterizedTypeReference<List<Map>>() {
+            ResponseEntity<List<Map>> response = restTemplate.exchange(camundaUrl+"/task?processInstanceId="+processId, HttpMethod.GET, null, new ParameterizedTypeReference<List<Map>>() {
             });
+
+            System.out.println("Process Id dentro de MarriedCouple_DilForDeSol: " + processId);
 
             List<Map> tasks = response.getBody();
             if (tasks != null && !tasks.isEmpty()) {
@@ -129,6 +131,8 @@ public class MarriedCouple_DilForDeSol implements MarriedCoupleService {
                 taskInfo.setTaskAssignee(taskInfoMap.get("assignee"));
 
                 tasksList.add(taskInfo);
+
+                System.out.println("TaskInfo consultado por ProcessId: " + taskInfo);
                 return taskInfo;
             } else {
                 System.err.println("No tasks found for Process ID " + processId);
@@ -211,12 +215,14 @@ public class MarriedCouple_DilForDeSol implements MarriedCoupleService {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
+            System.out.println("Completing task on MarriedCouple_DilForDeSol: " + taskId);
+
             Map<String, Object> requestBody = new HashMap<>();
 
             HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
             try {
-//                ResponseEntity<Map> response = restTemplate.postForEntity("http://bpmengine:9000/engine-rest"+"/task/"+taskId+"/complete", requestEntity, Map.class);
+//              ResponseEntity<Map> response = restTemplate.postForEntity("http://bpmengine:9000/engine-rest"+"/task/"+taskId+"/complete", requestEntity, Map.class);
                 ResponseEntity<Map> response = restTemplate.postForEntity(camundaUrl+"/task/"+taskId+"/complete", requestEntity, Map.class);
                 TaskInfo taskInfo1 = getTaskInfoByProcessIdWithApi(processId);
                 setAssignee(taskInfo1.getTaskId(), "CreditAnalyst");

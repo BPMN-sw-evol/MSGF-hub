@@ -30,6 +30,10 @@ public class CoupleServiceImpl implements CoupleService {
         String partner1Id = coupleDTO.getPartner1Id();
         String partner2Id = coupleDTO.getPartner2Id();
 
+        if (partner1Id.equals(partner2Id)) {
+            throw new IllegalArgumentException("Los dos cónyuges no pueden ser la misma persona.");
+        }
+
         Person partner1 = personService.getPersonById(partner1Id);
         Person partner2 = personService.getPersonById(partner2Id);
 
@@ -45,7 +49,7 @@ public class CoupleServiceImpl implements CoupleService {
             couple.setId(id);
             return coupleRepository.save(couple);
         }
-        return null; // Handle not found scenario
+        return null;
     }
 
     public void deleteCouple(Long id) {

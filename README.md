@@ -38,6 +38,10 @@ This mono repository contains the various modules shown in the following archite
 
 5. **annotations**: as part of the business process variable traceability project, some customized annotations were implemented in order to identify how these variables are traced in the source code. Here is the definition of the annotations using a Java project. [Repository Link](https://github.com/BPMN-sw-evol/MSGF-hub/tree/main/annotations)
 
+6. **db_Initializer**: application responsible for initializing the database and creating all necessary tables, using the connection string defined in the application.properties file [Repository Link](https://github.com/BPMN-sw-evol/MSGF-hub/tree/main/db_Initializer)
+
+#### *⚠️Important: the db_Initializer application must be executed first before any other service, as it is in charge of creating and initializing the project’s databases.*
+
 ## Technologies
 
 The applications created in this implementation were developed using the Java programming language, mainly taking advantage of the Spring Boot development framework as well as the Camunda 7 platform for business process management.

@@ -10,6 +10,9 @@
 <body>
 
 <section class="nombreClass">
+    <div th:if="${error}" class="alert alert-danger text-center mt-3 mx-4" role="alert"
+         th:text="${error}">
+    </div>
     <div class="container-fluid" layout:fragment="views">
         <div class="col mt-4 mb-3">
             <div class="card">
