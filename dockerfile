@@ -14,7 +14,7 @@ RUN echo "Building app..." \
 # el build debió quedar en /sources/target
 
 # stage 2 : package for running
-FROM openjdk:17-oracle
+FROM eclipse-temurin:17-jre
 
 WORKDIR /app
 COPY --from=MAVEN_BUILD /sources/BPM-Engine/target/*.jar ./BPM-Engine.jar
